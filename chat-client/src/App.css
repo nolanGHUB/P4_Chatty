@@ -1,17 +1,3 @@
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
-}
-.clearfix { display: inline-block; }
-/* start commented backslash hack \*/
-* html .clearfix { height: 1%; }
-.clearfix { display: block; }
-/* close commented backslash hack */
-
 html {
   background: #526977;
   font-family: 'Helvetica';
@@ -19,52 +5,169 @@ html {
   font-size: 20px;
 }
 
-div.stage {
-  background: #fff;
-  width: 90%;
-  margin: 20px auto;
-  padding: 20px;
-  box-shadow: 0 0 10px #333;
-}
-
-h1 {
-  margin-top: 0;
-  color: #333;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 20px;
-}
-
-ul.chat-logs {
-  border: 1px solid #ccc;
-  height: 300px;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 10px;
-  border-radius: 3px;
-  list-style-type: none;
-}
-
-ul.chat-logs li {
-  padding: 5px 10px;
+.header {
   display: flex;
   justify-content: space-between;
 }
 
-ul.chat-logs li span.chat-created-at {
-  font-size: 14px;
-  color: #999;
+.header-buttons {
+  height: 2.5rem;
+  display: flex;
 }
 
-input.chat-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  font-size: 20px;
-  margin: 0;
-  border-radius: 3px;
-  width: calc(100% - 22px);
-  outline: none;
-  margin-bottom: 10px;
+.header-button {
+  border: solid 1px black;
+  color: black;
+  background-color: rgb(207,206,202);
+  padding: 0.5rem;
 }
+
+.header-logo-div {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo-text {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.header-logo-img {
+  max-width: 4rem;
+}
+
+.chat {
+  display: flex;
+  justify-content: center;
+}
+
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 45vw;
+  background-color: rgb(207,206,202);
+}
+
+.chat-window {
+  margin: 0.2rem;
+  height: 10rem;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.chat-input {
+  margin: 0.2rem;
+  height: 2.5rem;
+}
+
+ul.chat-log {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-log li {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.chat-your-name {
+  font-size: 1rem;
+  color: red;
+}
+
+.chat-their-name {
+  color: blue;
+}
+
+.chat-message {
+  margin-left: 0.5rem;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2)
+}
+
+.modal-inner {
+  display: flex;
+  flex-direction: column;
+  /* width: 35%; */
+  background-color: rgb(207,206,202);
+}
+
+.modal-child {
+  background-color: white;
+  margin: 0.2rem;
+  border: 1px solid black;
+  padding-top: 1.5rem;
+}
+
+.modal-button {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.2rem;
+  padding: 0.1rem;
+  font-size: 1rem;
+  padding-left: 0.2rem;
+  /* color: rgb(51, 50, 50); */
+  color: white;
+  background: rgb(16,19,68);
+  background: linear-gradient(90deg, rgba(16,19,68,1) 0%, rgba(85,116,173,1) 49%, rgba(180,208,242,1) 100%);
+}
+
+.modal-button-box {
+  background-color: rgb(207,206,202);
+  border: 1px solid black;
+  padding: 0 0.2rem;
+  cursor: pointer;
+  color: black;
+}
+
+.login-register {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.login-register-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+}
+
+.login-register-form > input {
+  border-radius: 0.2rem;
+  height: 2rem;
+  padding: 0;
+  background-color: rgb(238, 238, 238);
+  color: black;
+  border: 1px solid rgba(99, 99, 99, 0.913);
+  margin: 1rem 0;
+  min-width: 12rem;
+}
+
+.form-button {
+  border: 1px solid #000;
+  background: #333;
+  color: #fff;
+  width: 6rem;
+  height: 1.5rem;
+  border-radius: 0.2rem;
+  font-size: 1rem;
+}
+
 
 button.send {
   background: #333;
@@ -73,4 +176,5 @@ button.send {
   padding: 10px 20px;
   font-size: 20px;
   border-radius: 3px;
+  margin: 0.2rem;
 }

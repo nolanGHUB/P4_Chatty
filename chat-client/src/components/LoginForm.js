@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-//React-Router
-import { Link } from 'react-router-dom'
 //Api calls
 import { loginUser } from '../services/api_helper'
 
@@ -31,27 +29,27 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={(e) =>
+      <div className="login-register">
+        {this.props.errorText && <p>{this.props.errorText}</p>}
+        <form className="login-register-form" onSubmit={(e) =>
           this.handleLogin(e, { email: this.state.email, password: this.state.password })
         }>
-          <h2>Login!</h2>
-          <label htmlFor="email">Email</label>
+          {/* <h2>Login!</h2> */}
+          <label htmlFor="email">Email: </label>
           <input
             type="text"
             name="email"
             value={this.state.email}
             onChange={this.handleChange}
           />
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Password: </label>
           <input
             type="password"
             name="password"
             value={this.state.password}
             onChange={this.handleChange}
           />
-          <button>Login</button>
-          <Link to="/register">Register</Link>
+          <button className="form-button">Login</button>
         </form>
       </div>
     )
