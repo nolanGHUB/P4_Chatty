@@ -35,6 +35,14 @@ class App extends Component {
     })
   }
 
+  handleLogout = () => {
+    this.setUser(null);
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    localStorage.removeItem('id');
+  }
+
   render() {
     return (
       <div className='App'>
@@ -42,11 +50,13 @@ class App extends Component {
         <Header
           currentUser={this.state.currentUser}
           setUser={this.setUser}
+          handleLogout={this.handleLogout}
         />
 
         {this.state.currentUser &&
           <Chat
             currentUser={this.state.currentUser}
+            handleLogout={this.handleLogout}
           />
         }
 
