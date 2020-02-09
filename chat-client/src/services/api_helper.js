@@ -11,6 +11,7 @@ export const loginUser = async (loginData) => {
   localStorage.setItem('authToken', resp.data.auth_token);
   localStorage.setItem('name', resp.data.name);
   localStorage.setItem('email', resp.data.email);
+  localStorage.setItem('id', resp.data.id)
   return {
     auth_token: resp.data.auth_token,
     name: resp.data.name,
@@ -28,6 +29,7 @@ export const registerUser = async (registerData) => {
     localStorage.setItem('authToken', resp.data.auth_token);
     localStorage.setItem('name', resp.data.user.name);
     localStorage.setItem('email', resp.data.user.email);
+    localStorage.setItem('id', resp.data.user.id)
     email = resp.data.user.email;
     return resp.data.user;
   } catch (e) {
