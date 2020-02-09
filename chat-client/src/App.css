@@ -5,9 +5,14 @@ html {
   font-size: 20px;
 }
 
-.header-buttons {
+.header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+}
+
+.header-buttons {
+  height: 2.5rem;
+  display: flex;
 }
 
 .header-button {
@@ -15,6 +20,20 @@ html {
   color: black;
   background-color: rgb(207,206,202);
   padding: 0.5rem;
+}
+
+.header-logo-div {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo-text {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.header-logo-img {
+  max-width: 4rem;
 }
 
 .chat {
