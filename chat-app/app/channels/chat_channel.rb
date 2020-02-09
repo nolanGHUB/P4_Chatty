@@ -16,7 +16,7 @@ class ChatChannel < ApplicationCable::Channel
 
   def create(opts)
     ChatMessage.create(
-        content: opts.fetch('content')
+        content: opts.fetch('content'), created_by: opts.fetch('created_by')
     )
   end
 end
