@@ -2635,3 +2635,427 @@ Started GET "/cable/" [WebSocket] for ::1 at 2020-02-08 23:54:41 -0500
 Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
 ChatChannel is transmitting the subscription confirmation
 ChatChannel is streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:11:58 -0500
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:11:58 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:12:08 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:12:08 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Started POST "/auth/login" for ::1 at 2020-02-09 03:12:14 -0500
+Processing by AuthenticationController#authenticate as HTML
+  Parameters: {"email"=>"nolan@gmail.com", "password"=>"[FILTERED]", "authentication"=>{"email"=>"nolan@gmail.com", "password"=>"[FILTERED]"}}
+[31mUnpermitted parameter: :authentication[0m
+[31mUnpermitted parameter: :authentication[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "nolan@gmail.com"], ["LIMIT", 1]]
+  ↳ app/auth/authenticate_user.rb:18:in `user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "nolan@gmail.com"], ["LIMIT", 1]]
+  ↳ app/auth/authenticate_user.rb:18:in `user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "nolan@gmail.com"], ["LIMIT", 1]]
+  ↳ app/auth/authenticate_user.rb:18:in `user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "nolan@gmail.com"], ["LIMIT", 1]]
+  ↳ app/auth/authenticate_user.rb:18:in `user'
+[31mUnpermitted parameter: :authentication[0m
+Completed 200 OK in 1081ms (Views: 0.2ms | ActiveRecord: 1.4ms | Allocations: 8724)
+
+
+ChatChannel#create({"content"=>"Hey", "created_by"=>1})
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (1.1ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "Hey"], ["created_at", "2020-02-09 08:12:22.720293"], ["updated_at", "2020-02-09 08:12:22.720293"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 632652a1-bf6c-4f7e-a854-00e638459269) to Async(default) with arguments: #<GlobalID:0x00007fe7a4ed2fe0 @uri=#<URI::GID gid://chat-app/ChatMessage/80>>
+  [1m[36mChatMessage Load (0.3ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 80], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [632652a1-bf6c-4f7e-a854-00e638459269] Performing ChatMessageCreationEventBroadcastJob (Job ID: 632652a1-bf6c-4f7e-a854-00e638459269) from Async(default) enqueued at 2020-02-09T08:12:22Z with arguments: #<GlobalID:0x00007fe7a41fdb08 @uri=#<URI::GID gid://chat-app/ChatMessage/80>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [632652a1-bf6c-4f7e-a854-00e638459269]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [632652a1-bf6c-4f7e-a854-00e638459269]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [632652a1-bf6c-4f7e-a854-00e638459269] [ActionCable] Broadcasting to chat_channel: {:id=>80, :created_at=>"08:12", :content=>"Hey", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [632652a1-bf6c-4f7e-a854-00e638459269] Performed ChatMessageCreationEventBroadcastJob (Job ID: 632652a1-bf6c-4f7e-a854-00e638459269) from Async(default) in 9.67ms
+ChatChannel transmitting {"id"=>80, "created_at"=>"08:12", "content"=>"Hey", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>80, "created_at"=>"08:12", "content"=>"Hey", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:17:41 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:17:41 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:17:41 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"Test 123", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.7ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "Test 123"], ["created_at", "2020-02-09 08:17:45.855594"], ["updated_at", "2020-02-09 08:17:45.855594"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: c3bc924e-28b4-4d08-9629-d64610cdcde9) to Async(default) with arguments: #<GlobalID:0x00007fe7a5256068 @uri=#<URI::GID gid://chat-app/ChatMessage/81>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 81], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [c3bc924e-28b4-4d08-9629-d64610cdcde9] Performing ChatMessageCreationEventBroadcastJob (Job ID: c3bc924e-28b4-4d08-9629-d64610cdcde9) from Async(default) enqueued at 2020-02-09T08:17:45Z with arguments: #<GlobalID:0x00007fe7a528c550 @uri=#<URI::GID gid://chat-app/ChatMessage/81>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [c3bc924e-28b4-4d08-9629-d64610cdcde9]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [c3bc924e-28b4-4d08-9629-d64610cdcde9]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [c3bc924e-28b4-4d08-9629-d64610cdcde9] [ActionCable] Broadcasting to chat_channel: {:id=>81, :created_at=>"08:17", :content=>"Test 123", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [c3bc924e-28b4-4d08-9629-d64610cdcde9] Performed ChatMessageCreationEventBroadcastJob (Job ID: c3bc924e-28b4-4d08-9629-d64610cdcde9) from Async(default) in 1.02ms
+ChatChannel transmitting {"id"=>81, "created_at"=>"08:17", "content"=>"Test 123", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>81, "created_at"=>"08:17", "content"=>"Test 123", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:19:42 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:19:42 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:19:42 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"test testing test", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.5ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "test testing test"], ["created_at", "2020-02-09 08:19:51.060954"], ["updated_at", "2020-02-09 08:19:51.060954"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 781223c6-5b9b-481f-ac32-201ad6b1c237) to Async(default) with arguments: #<GlobalID:0x00007fe7a541e990 @uri=#<URI::GID gid://chat-app/ChatMessage/82>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 82], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [781223c6-5b9b-481f-ac32-201ad6b1c237] Performing ChatMessageCreationEventBroadcastJob (Job ID: 781223c6-5b9b-481f-ac32-201ad6b1c237) from Async(default) enqueued at 2020-02-09T08:19:51Z with arguments: #<GlobalID:0x00007fe7a91832b8 @uri=#<URI::GID gid://chat-app/ChatMessage/82>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [781223c6-5b9b-481f-ac32-201ad6b1c237]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [781223c6-5b9b-481f-ac32-201ad6b1c237]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [781223c6-5b9b-481f-ac32-201ad6b1c237] [ActionCable] Broadcasting to chat_channel: {:id=>82, :created_at=>"08:19", :content=>"test testing test", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [781223c6-5b9b-481f-ac32-201ad6b1c237] Performed ChatMessageCreationEventBroadcastJob (Job ID: 781223c6-5b9b-481f-ac32-201ad6b1c237) from Async(default) in 0.96ms
+ChatChannel transmitting {"id"=>82, "created_at"=>"08:19", "content"=>"test testing test", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>82, "created_at"=>"08:19", "content"=>"test testing test", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:25:35 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:25:35 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:25:35 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"testy", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.6ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "testy"], ["created_at", "2020-02-09 08:28:18.992052"], ["updated_at", "2020-02-09 08:28:18.992052"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95) to Async(default) with arguments: #<GlobalID:0x00007fe7a554de60 @uri=#<URI::GID gid://chat-app/ChatMessage/83>>
+  [1m[36mChatMessage Load (0.2ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 83], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95] Performing ChatMessageCreationEventBroadcastJob (Job ID: e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95) from Async(default) enqueued at 2020-02-09T08:28:18Z with arguments: #<GlobalID:0x00007fe7a42ed478 @uri=#<URI::GID gid://chat-app/ChatMessage/83>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95]   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95] [ActionCable] Broadcasting to chat_channel: {:id=>83, :created_at=>"08:28", :content=>"testy", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95] Performed ChatMessageCreationEventBroadcastJob (Job ID: e6cdb6d0-cc34-4745-b9e3-1abaec9c4e95) from Async(default) in 1.16ms
+ChatChannel transmitting {"id"=>83, "created_at"=>"08:28", "content"=>"testy", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>83, "created_at"=>"08:28", "content"=>"testy", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:29:26 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:29:26 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:29:26 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"test1", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.5ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "test1"], ["created_at", "2020-02-09 08:30:18.427260"], ["updated_at", "2020-02-09 08:30:18.427260"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 0a0c9636-71ac-4678-b781-bffbb12721d2) to Async(default) with arguments: #<GlobalID:0x00007fe7a5597448 @uri=#<URI::GID gid://chat-app/ChatMessage/84>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 84], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [0a0c9636-71ac-4678-b781-bffbb12721d2] Performing ChatMessageCreationEventBroadcastJob (Job ID: 0a0c9636-71ac-4678-b781-bffbb12721d2) from Async(default) enqueued at 2020-02-09T08:30:18Z with arguments: #<GlobalID:0x00007fe7a4b9f008 @uri=#<URI::GID gid://chat-app/ChatMessage/84>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [0a0c9636-71ac-4678-b781-bffbb12721d2]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [0a0c9636-71ac-4678-b781-bffbb12721d2]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [0a0c9636-71ac-4678-b781-bffbb12721d2] [ActionCable] Broadcasting to chat_channel: {:id=>84, :created_at=>"08:30", :content=>"test1", :name=>"nolan"}
+ChatChannel transmitting {"id"=>84, "created_at"=>"08:30", "content"=>"test1", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>84, "created_at"=>"08:30", "content"=>"test1", "name"=>"nolan"} (via streamed from chat_channel)
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [0a0c9636-71ac-4678-b781-bffbb12721d2] Performed ChatMessageCreationEventBroadcastJob (Job ID: 0a0c9636-71ac-4678-b781-bffbb12721d2) from Async(default) in 0.99ms
+ChatChannel#create({"content"=>"test2", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.6ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "test2"], ["created_at", "2020-02-09 08:30:19.566209"], ["updated_at", "2020-02-09 08:30:19.566209"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: df5230a5-80b4-439d-9fec-1222b8465882) to Async(default) with arguments: #<GlobalID:0x00007fe7a41e4bf8 @uri=#<URI::GID gid://chat-app/ChatMessage/85>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 85], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [df5230a5-80b4-439d-9fec-1222b8465882] Performing ChatMessageCreationEventBroadcastJob (Job ID: df5230a5-80b4-439d-9fec-1222b8465882) from Async(default) enqueued at 2020-02-09T08:30:19Z with arguments: #<GlobalID:0x00007fe7a4f43a88 @uri=#<URI::GID gid://chat-app/ChatMessage/85>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [df5230a5-80b4-439d-9fec-1222b8465882]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [df5230a5-80b4-439d-9fec-1222b8465882]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [df5230a5-80b4-439d-9fec-1222b8465882] [ActionCable] Broadcasting to chat_channel: {:id=>85, :created_at=>"08:30", :content=>"test2", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [df5230a5-80b4-439d-9fec-1222b8465882] Performed ChatMessageCreationEventBroadcastJob (Job ID: df5230a5-80b4-439d-9fec-1222b8465882) from Async(default) in 0.89ms
+ChatChannel transmitting {"id"=>85, "created_at"=>"08:30", "content"=>"test2", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>85, "created_at"=>"08:30", "content"=>"test2", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:34:57 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:34:57 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:34:57 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"test1", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.6ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "test1"], ["created_at", "2020-02-09 08:34:59.273549"], ["updated_at", "2020-02-09 08:34:59.273549"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: cf6d9381-9862-4e97-b411-4240c1d02934) to Async(default) with arguments: #<GlobalID:0x00007fe7a547c680 @uri=#<URI::GID gid://chat-app/ChatMessage/86>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 86], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [cf6d9381-9862-4e97-b411-4240c1d02934] Performing ChatMessageCreationEventBroadcastJob (Job ID: cf6d9381-9862-4e97-b411-4240c1d02934) from Async(default) enqueued at 2020-02-09T08:34:59Z with arguments: #<GlobalID:0x00007fe7a61aff28 @uri=#<URI::GID gid://chat-app/ChatMessage/86>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [cf6d9381-9862-4e97-b411-4240c1d02934]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [cf6d9381-9862-4e97-b411-4240c1d02934]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [cf6d9381-9862-4e97-b411-4240c1d02934] [ActionCable] Broadcasting to chat_channel: {:id=>86, :created_at=>"08:34", :content=>"test1", :name=>"nolan"}
+ChatChannel transmitting {"id"=>86, "created_at"=>"08:34", "content"=>"test1", "name"=>"nolan"} (via streamed from chat_channel)
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [cf6d9381-9862-4e97-b411-4240c1d02934] Performed ChatMessageCreationEventBroadcastJob (Job ID: cf6d9381-9862-4e97-b411-4240c1d02934) from Async(default) in 0.91ms
+ChatChannel transmitting {"id"=>86, "created_at"=>"08:34", "content"=>"test1", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:35:07 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:35:08 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:35:08 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"tes12", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (1.4ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "tes12"], ["created_at", "2020-02-09 08:35:10.900671"], ["updated_at", "2020-02-09 08:35:10.900671"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 19baa39a-8e17-4b61-8909-142fbf1f6fee) to Async(default) with arguments: #<GlobalID:0x00007fe7a91e1980 @uri=#<URI::GID gid://chat-app/ChatMessage/87>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 87], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [19baa39a-8e17-4b61-8909-142fbf1f6fee] Performing ChatMessageCreationEventBroadcastJob (Job ID: 19baa39a-8e17-4b61-8909-142fbf1f6fee) from Async(default) enqueued at 2020-02-09T08:35:10Z with arguments: #<GlobalID:0x00007fe7a54ad258 @uri=#<URI::GID gid://chat-app/ChatMessage/87>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [19baa39a-8e17-4b61-8909-142fbf1f6fee]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [19baa39a-8e17-4b61-8909-142fbf1f6fee]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [19baa39a-8e17-4b61-8909-142fbf1f6fee] [ActionCable] Broadcasting to chat_channel: {:id=>87, :created_at=>"08:35", :content=>"tes12", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [19baa39a-8e17-4b61-8909-142fbf1f6fee] Performed ChatMessageCreationEventBroadcastJob (Job ID: 19baa39a-8e17-4b61-8909-142fbf1f6fee) from Async(default) in 0.95ms
+ChatChannel transmitting {"id"=>87, "created_at"=>"08:35", "content"=>"tes12", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>87, "created_at"=>"08:35", "content"=>"tes12", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:38:07 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:38:08 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:38:08 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:38:33 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:38:33 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:38:33 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"test 1", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.6ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "test 1"], ["created_at", "2020-02-09 08:38:36.701911"], ["updated_at", "2020-02-09 08:38:36.701911"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 73c00e7b-087f-48ba-b732-54d21e90567a) to Async(default) with arguments: #<GlobalID:0x00007fe7a629dd40 @uri=#<URI::GID gid://chat-app/ChatMessage/88>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 88], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [73c00e7b-087f-48ba-b732-54d21e90567a] Performing ChatMessageCreationEventBroadcastJob (Job ID: 73c00e7b-087f-48ba-b732-54d21e90567a) from Async(default) enqueued at 2020-02-09T08:38:36Z with arguments: #<GlobalID:0x00007fe7a5525618 @uri=#<URI::GID gid://chat-app/ChatMessage/88>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [73c00e7b-087f-48ba-b732-54d21e90567a]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [73c00e7b-087f-48ba-b732-54d21e90567a]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [73c00e7b-087f-48ba-b732-54d21e90567a] [ActionCable] Broadcasting to chat_channel: {:id=>88, :created_at=>"08:38", :content=>"test 1", :name=>"nolan"}
+ChatChannel transmitting {"id"=>88, "created_at"=>"08:38", "content"=>"test 1", "name"=>"nolan"} (via streamed from chat_channel)
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [73c00e7b-087f-48ba-b732-54d21e90567a] Performed ChatMessageCreationEventBroadcastJob (Job ID: 73c00e7b-087f-48ba-b732-54d21e90567a) from Async(default) in 0.92ms
+ChatChannel transmitting {"id"=>88, "created_at"=>"08:38", "content"=>"test 1", "name"=>"nolan"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:38:47 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:38:47 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:38:47 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"Hey", "created_by"=>5})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.5ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "Hey"], ["created_at", "2020-02-09 08:38:52.761875"], ["updated_at", "2020-02-09 08:38:52.761875"], ["created_by", "5"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 8d2fd47f-dbf2-4e46-b29e-f6e35be7a961) to Async(default) with arguments: #<GlobalID:0x00007fe7a62ddb48 @uri=#<URI::GID gid://chat-app/ChatMessage/89>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 89], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [8d2fd47f-dbf2-4e46-b29e-f6e35be7a961] Performing ChatMessageCreationEventBroadcastJob (Job ID: 8d2fd47f-dbf2-4e46-b29e-f6e35be7a961) from Async(default) enqueued at 2020-02-09T08:38:52Z with arguments: #<GlobalID:0x00007fe7a62f5400 @uri=#<URI::GID gid://chat-app/ChatMessage/89>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [8d2fd47f-dbf2-4e46-b29e-f6e35be7a961]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [8d2fd47f-dbf2-4e46-b29e-f6e35be7a961]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [8d2fd47f-dbf2-4e46-b29e-f6e35be7a961] [ActionCable] Broadcasting to chat_channel: {:id=>89, :created_at=>"08:38", :content=>"Hey", :name=>"john"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [8d2fd47f-dbf2-4e46-b29e-f6e35be7a961] Performed ChatMessageCreationEventBroadcastJob (Job ID: 8d2fd47f-dbf2-4e46-b29e-f6e35be7a961) from Async(default) in 0.85ms
+ChatChannel transmitting {"id"=>89, "created_at"=>"08:38", "content"=>"Hey", "name"=>"john"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>89, "created_at"=>"08:38", "content"=>"Hey", "name"=>"john"} (via streamed from chat_channel)
+ChatChannel#create({"content"=>"hey john!", "created_by"=>1})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.5ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "hey john!"], ["created_at", "2020-02-09 08:38:59.941946"], ["updated_at", "2020-02-09 08:38:59.941946"], ["created_by", "1"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 6c0d5573-20b3-4825-beeb-d00f3cb0ace5) to Async(default) with arguments: #<GlobalID:0x00007fe7a4304600 @uri=#<URI::GID gid://chat-app/ChatMessage/90>>
+  [1m[36mChatMessage Load (0.2ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 90], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [6c0d5573-20b3-4825-beeb-d00f3cb0ace5] Performing ChatMessageCreationEventBroadcastJob (Job ID: 6c0d5573-20b3-4825-beeb-d00f3cb0ace5) from Async(default) enqueued at 2020-02-09T08:38:59Z with arguments: #<GlobalID:0x00007fe7a92d2f38 @uri=#<URI::GID gid://chat-app/ChatMessage/90>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [6c0d5573-20b3-4825-beeb-d00f3cb0ace5]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [6c0d5573-20b3-4825-beeb-d00f3cb0ace5]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [6c0d5573-20b3-4825-beeb-d00f3cb0ace5] [ActionCable] Broadcasting to chat_channel: {:id=>90, :created_at=>"08:38", :content=>"hey john!", :name=>"nolan"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [6c0d5573-20b3-4825-beeb-d00f3cb0ace5] Performed ChatMessageCreationEventBroadcastJob (Job ID: 6c0d5573-20b3-4825-beeb-d00f3cb0ace5) from Async(default) in 0.95ms
+ChatChannel transmitting {"id"=>90, "created_at"=>"08:38", "content"=>"hey john!", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>90, "created_at"=>"08:38", "content"=>"hey john!", "name"=>"nolan"} (via streamed from chat_channel)
+ChatChannel#create({"content"=>"Nolan! Where've you been?", "created_by"=>5})
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (0.5ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "Nolan! Where've you been?"], ["created_at", "2020-02-09 08:40:15.823588"], ["updated_at", "2020-02-09 08:40:15.823588"], ["created_by", "5"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 1434ace8-a6de-46df-9c48-73b844e92028) to Async(default) with arguments: #<GlobalID:0x00007fe7a41ae198 @uri=#<URI::GID gid://chat-app/ChatMessage/91>>
+  [1m[36mChatMessage Load (0.1ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 91], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [1434ace8-a6de-46df-9c48-73b844e92028] Performing ChatMessageCreationEventBroadcastJob (Job ID: 1434ace8-a6de-46df-9c48-73b844e92028) from Async(default) enqueued at 2020-02-09T08:40:15Z with arguments: #<GlobalID:0x00007fe7a41ff7f0 @uri=#<URI::GID gid://chat-app/ChatMessage/91>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [1434ace8-a6de-46df-9c48-73b844e92028]   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [1434ace8-a6de-46df-9c48-73b844e92028]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [1434ace8-a6de-46df-9c48-73b844e92028] [ActionCable] Broadcasting to chat_channel: {:id=>91, :created_at=>"08:40", :content=>"Nolan! Where've you been?", :name=>"john"}
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [1434ace8-a6de-46df-9c48-73b844e92028] Performed ChatMessageCreationEventBroadcastJob (Job ID: 1434ace8-a6de-46df-9c48-73b844e92028) from Async(default) in 1.07ms
+ChatChannel transmitting {"id"=>91, "created_at"=>"08:40", "content"=>"Nolan! Where've you been?", "name"=>"john"} (via streamed from chat_channel)
+ChatChannel transmitting {"id"=>91, "created_at"=>"08:40", "content"=>"Nolan! Where've you been?", "name"=>"john"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:44:04 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:44:13 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:44:13 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 03:50:17 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 03:50:17 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 03:50:17 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 05:51:08 -0500
+ChatChannel stopped streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 05:51:08 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 05:51:09 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 05:51:09 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 05:51:41 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 05:51:42 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 05:51:42 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 05:52:32 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 05:52:32 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 06:57:51 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 06:57:52 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 06:57:52 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+ChatChannel#create({"content"=>"yo", "created_by"=>5})
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[36mChatMessage Create (2.2ms)[0m  [1m[32mINSERT INTO "chat_messages" ("content", "created_at", "updated_at", "created_by") VALUES (?, ?, ?, ?)[0m  [["content", "yo"], ["created_at", "2020-02-09 16:09:04.756238"], ["updated_at", "2020-02-09 16:09:04.756238"], ["created_by", "5"]]
+  ↳ app/channels/chat_channel.rb:18:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/channels/chat_channel.rb:18:in `create'
+[ActiveJob] Enqueued ChatMessageCreationEventBroadcastJob (Job ID: 4399ad65-8248-4ef1-aedb-a094c4a7c132) to Async(default) with arguments: #<GlobalID:0x00007fe7a544ca98 @uri=#<URI::GID gid://chat-app/ChatMessage/92>>
+  [1m[36mChatMessage Load (0.2ms)[0m  [1m[34mSELECT "chat_messages".* FROM "chat_messages" WHERE "chat_messages"."id" = ? LIMIT ?[0m  [["id", 92], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [4399ad65-8248-4ef1-aedb-a094c4a7c132] Performing ChatMessageCreationEventBroadcastJob (Job ID: 4399ad65-8248-4ef1-aedb-a094c4a7c132) from Async(default) enqueued at 2020-02-09T16:09:04Z with arguments: #<GlobalID:0x00007fe7a9188fb0 @uri=#<URI::GID gid://chat-app/ChatMessage/92>>
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [4399ad65-8248-4ef1-aedb-a094c4a7c132]   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [4399ad65-8248-4ef1-aedb-a094c4a7c132]   ↳ app/jobs/chat_message_creation_event_broadcast_job.rb:6:in `perform'
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [4399ad65-8248-4ef1-aedb-a094c4a7c132] [ActionCable] Broadcasting to chat_channel: {:id=>92, :created_at=>"16:09", :content=>"yo", :name=>"john"}
+ChatChannel transmitting {"id"=>92, "created_at"=>"16:09", "content"=>"yo", "name"=>"john"} (via streamed from chat_channel)
+[ActiveJob] [ChatMessageCreationEventBroadcastJob] [4399ad65-8248-4ef1-aedb-a094c4a7c132] Performed ChatMessageCreationEventBroadcastJob (Job ID: 4399ad65-8248-4ef1-aedb-a094c4a7c132) from Async(default) in 1.41ms
+ChatChannel transmitting {"id"=>92, "created_at"=>"16:09", "content"=>"yo", "name"=>"john"} (via streamed from chat_channel)
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:12:19 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:12:19 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:12:19 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:15:44 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:15:44 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:15:44 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:15:45 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:15:45 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:15:45 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:17 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:18:17 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:17 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:22 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:18:22 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:22 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:33 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:18:33 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:33 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:36 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:18:36 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:18:36 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:02 -0500
+ChatChannel stopped streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:02 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:20:02 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:02 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:40 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:20:40 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:40 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:54 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:20:54 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:20:54 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
+Finished "/cable/" [WebSocket] for ::1 at 2020-02-09 11:21:12 -0500
+ChatChannel stopped streaming from chat_channel
+Started GET "/cable" for ::1 at 2020-02-09 11:21:12 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2020-02-09 11:21:12 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+ChatChannel is transmitting the subscription confirmation
+ChatChannel is streaming from chat_channel
