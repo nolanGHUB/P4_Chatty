@@ -3,6 +3,9 @@ import { registerUser, verifyUser } from './services/api_helper'
 import './App.css';
 import Cable from 'actioncable';
 
+//custom components
+import LoginForm from './components/LoginForm'
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -10,8 +13,9 @@ class App extends Component {
     this.state = {
       currentChatMessage: '',
       chatLogs: [],
-      email: 'nolan@gmail.com',
-      password: 'qwert'
+      currentUser: '',
+      id: 1,
+      userList: [],
     }
   }
 
@@ -43,6 +47,12 @@ class App extends Component {
     }
   }
 
+  setUser = (currentUser) => {
+    this.setState({
+      currentUser
+    })
+  }
+
   updateCurrentChatMessage(event) {
     this.setState({
       currentChatMessage: event.target.value
@@ -56,32 +66,34 @@ class App extends Component {
     }, {
       connected: () => { },
       received: (data) => {
-        let chatLogs = this.state.chatLogs;
-        chatLogs.push(data);
-        this.setState({ chatLogs });
+        // let chatLogs = this.state.chatLogs;
+        // chatLogs.push(data);
+        this.setState({
+          chatLogs: [...this.state.chatLogs, data]
+        });
       },
-      create: function (chatContent) {
+      create: function (chatContent, userId) {
         this.perform('create', {
-          content: chatContent
+          content: chatContent,
+          created_by: userId
         });
       }
     });
   }
 
   renderChatLog() {
-    return this.state.chatLogs.map((el) => {
-      return (
-        <li key={`chat_${el.id}`}>
-          <span className='chat-message'>{el.content}</span>
-          <span className='chat-created-at'>{el.created_at}</span>
-        </li>
-      );
-    });
+    return this.state.chatLogs.map((el) =>
+      <li key={`chat_${el.id}`}>
+        <span className='chat-name'>{el.name}</span>
+        <span className='chat-message'>{el.content}</span>
+        <span className='chat-created-at'>{el.created_at}</span>
+      </li>
+    );
   }
 
   handleSendEvent(event) {
     event.preventDefault();
-    this.chats.create(this.state.currentChatMessage);
+    this.chats.create(this.state.currentChatMessage, this.state.currentUser.id);
     this.setState({
       currentChatMessage: ''
     });
@@ -94,8 +106,18 @@ class App extends Component {
   }
 
   render() {
+    // { console.log(this.state.chatLogs) }
+    { console.log(this.state.currentUser) }
     return (
       <div className='App'>
+        {this.state.currentUser ?
+          <h4>Welcome back, {this.state.currentUser.name}</h4>
+          :
+          <LoginForm
+            setUser={this.setUser}
+          />
+        }
+
         <div className='stage'>
           <h1>Chat</h1>
           <div className='chat-logs'>
