@@ -45,9 +45,13 @@ class Chat extends Component {
   renderChatLog() {
     return this.state.chatLogs.map((el) =>
       <li key={`chat_${el.id}`}>
-        <span className='chat-name'>{el.name}</span>
+        {el.name === this.props.currentUser.name ?
+          <span className='chat-your-name'>{el.name}</span>
+          :
+          <span className='chat-their-name'>{el.name}</span>
+        }
+        <span className='chat-created-at'>({el.created_at}): </span>
         <span className='chat-message'>{el.content}</span>
-        <span className='chat-created-at'>{el.created_at}</span>
       </li>
     );
   }
@@ -68,11 +72,10 @@ class Chat extends Component {
 
   render() {
     return (
-      <div>
-        <div className='stage'>
-          <h1>Chat</h1>
-          <div className='chat-logs'>
-            <ul className='chat-logs'>
+      <div className="chat">
+        <div className='chat-wrapper'>
+          <div className='chat-window'>
+            <ul className='chat-log'>
               {this.renderChatLog()}
             </ul>
           </div>
