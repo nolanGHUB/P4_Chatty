@@ -23,15 +23,6 @@ export default class Header extends React.Component {
     })
   }
 
-  handleLogout = () => {
-    this.props.setUser(null)
-
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    localStorage.removeItem('id');
-  }
-
   toggleModal = () => {
     this.setState({
       modal: !this.state.modal
@@ -41,10 +32,14 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className="header">
+        <div className="header-logo-div">
+          <img className="header-logo-img" src="/images/aim-logo3.png" alt="retro aim-like logo"></img>
+          <span className="header-logo-text">Chatty</span>
+        </div>
         {this.props.currentUser ?
           <div>
             <h4>Welcome back, {this.props.currentUser.name}</h4>
-            <button onClick={this.handleLogout}>Logout</button>
+            <div className="header-button" onClick={this.handleLogout}>Logout</div>
           </div>
           :
           <div className="header-buttons">
