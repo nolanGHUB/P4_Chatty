@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { registerUser, verifyUser } from './services/api_helper'
 import './App.css';
-
+//api_helper
+import { verifyUser } from './services/api_helper'
 //custom components
-import LoginForm from './components/LoginForm'
 import Chat from './components/Chat';
+import Header from './components/Header';
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      currentUser: '',
+      currentUser: null,
       userList: []
     }
   }
@@ -29,31 +29,6 @@ class App extends Component {
     }
   }
 
-  handleRegister = async (e, registerData) => {
-    e.preventDefault();
-    const currentUser = await registerUser(registerData);
-    if (!currentUser.errorMessage) {
-      this.setState({
-        currentUser
-      })
-      this.props.history.push('/todos')
-    } else {
-      this.setState({
-        errorText: currentUser.errorMessage
-      })
-    }
-  }
-
-  handleLogout = () => {
-    this.setState({
-      currentUser: null
-    })
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    localStorage.removeItem('id');
-  }
-
   setUser = (currentUser) => {
     this.setState({
       currentUser
@@ -61,23 +36,19 @@ class App extends Component {
   }
 
   render() {
-    // { console.log(this.state.chatLogs) }
-    // { console.log(this.state.currentUser) }
     return (
       <div className='App'>
-        {this.state.currentUser ?
-          <div>
-            <h4>Welcome back, {this.state.currentUser.name}</h4>
-            <button onClick={this.handleLogout}>Logout</button>
-          </div>
-          :
-          <LoginForm
-            setUser={this.setUser}
+
+        <Header
+          currentUser={this.state.currentUser}
+          setUser={this.setUser}
+        />
+
+        {this.state.currentUser &&
+          <Chat
+            currentUser={this.state.currentUser}
           />
         }
-        <Chat
-          currentUser={this.state.currentUser}
-        />
 
       </div>
     );
