@@ -32,13 +32,16 @@ export default class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        <div className="header-logo-div">
-          <img className="header-logo-img" src="/images/aim-logo3.png" alt="retro aim-like logo"></img>
-          <span className="header-logo-text">Chatty</span>
+        <div className="header-logo-and-welcome-wrapper">
+          <div className="header-logo-div">
+            <img className="header-logo-img" src="/images/aim-logo3.png" alt="retro aim-like logo"></img>
+            <span className="header-logo-text">Chatty</span>
+          </div>
+          {this.props.currentUser && <h4 className="header-logo-welcome-text">Welcome back, {this.props.currentUser.name}</h4>}
         </div>
+
         {this.props.currentUser ?
-          <div>
-            <h4>Welcome back, {this.props.currentUser.name}</h4>
+          <div className="header-welcome">
             <div className="header-button" onClick={this.handleLogout}>Logout</div>
           </div>
           :
