@@ -42,6 +42,7 @@
     <index id="16" parent="6" name="sqlite_autoindex_ar_internal_metadata_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>key</ColNames>
+      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="17" parent="6">
@@ -85,6 +86,7 @@
     <index id="25" parent="8" name="sqlite_autoindex_schema_migrations_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>version</ColNames>
+      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="26" parent="8">
@@ -146,7 +148,11 @@
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="40" parent="11">
+    <column id="40" parent="11" name="is_online">
+      <Position>7</Position>
+      <DataType>boolean|0s</DataType>
+    </column>
+    <key id="41" parent="11">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
