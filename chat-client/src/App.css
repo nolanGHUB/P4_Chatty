@@ -1,7 +1,7 @@
 html {
   background: #526977;
   font-family: 'Helvetica';
-  color: #333;
+  /* color: #333; */
   font-size: 20px;
 }
 
@@ -27,6 +27,11 @@ html {
   align-items: center;
 }
 
+.header-logo-welcome-text {
+  color: white;
+  margin: 0;
+}
+
 .header-logo-text {
   font-size: 2.5rem;
   color: white;
@@ -45,6 +50,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 18rem;
   width: 45vw;
   background-color: rgb(207,206,202);
 }
@@ -59,6 +65,7 @@ html {
 .chat-input {
   margin: 0.2rem;
   height: 2.5rem;
+  border: 1px solid black;
 }
 
 ul.chat-log {
@@ -85,6 +92,10 @@ ul.chat-log {
   margin-left: 0.5rem;
 }
 
+.window {
+  display: flex;
+}
+
 .modal {
   display: flex;
   align-items: center;
@@ -109,7 +120,7 @@ ul.chat-log {
   background-color: white;
   margin: 0.2rem;
   border: 1px solid black;
-  padding-top: 1.5rem;
+  /* padding-top: 1.5rem; */
 }
 
 .modal-button {
