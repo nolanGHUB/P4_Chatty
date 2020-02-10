@@ -2,12 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ae8fd2ff-6815-4ff5-88bf-8b01ad701b7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a08841c2-74e4-48b1-a5d1-1de85d981461.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a08841c2-74e4-48b1-a5d1-1de85d981461.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/app/channels/application_cable/connection.rb" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/app/channels/application_cable/connection.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/app/channels/chat_channel.rb" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/app/channels/chat_channel.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/app/controllers/users_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/app/controllers/users_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/app/models/user.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat-app/db/development.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/db/development.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/db/schema.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat-app/log/development.log" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/log/development.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat-client/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat-client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat-client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat-client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/20/d1fb940565582c" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/20/d1fb940565582c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/6e/43f02730d2be09" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/6e/43f02730d2be09" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/d5/53ed087e6de36c" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/d5/53ed087e6de36c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/f8/e2a4239bfa52e1" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-compile-cache/f8/e2a4239bfa52e1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-load-path-cache" beforeDir="false" afterPath="$PROJECT_DIR$/chat-app/tmp/cache/bootsnap-load-path-cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-client/src/components/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat-client/src/components/LoginForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-client/src/components/RegisterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat-client/src/components/RegisterForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat-client/src/components/Window.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat-client/src/components/Window.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,8 +93,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/wireframes" />
     <property name="project.settings.patched" value="true" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.ruby.settings.RubyActiveModuleSdkConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/wireframes" />
+    </key>
   </component>
   <component name="RunManager" selected="Rails.Development: chat-app">
     <configuration name="Development: chat-app" type="RailsRunConfigurationType" factoryName="Rails">
@@ -197,17 +214,7 @@
               <path>
                 <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
                 <item name="root:development" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@7f25e4a1" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:development" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@52c3548b" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="root:development" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.database.console.session.MessageBusSession@65e7a8ed" type="9fbbdea:ServiceModel$ServiceNode" />
+                <item name="com.intellij.database.console.session.MessageBusSession@3483305a" type="9fbbdea:ServiceModel$ServiceNode" />
               </path>
             </expand>
             <select />
@@ -227,7 +234,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581183194460</updated>
-      <workItem from="1581183198962" duration="16683000" />
+      <workItem from="1581183198962" duration="29868000" />
     </task>
     <servers />
   </component>

@@ -11,6 +11,14 @@ class UsersController < ApplicationController
     json_response(response, :created)
   end
 
+  #def is_online
+  #  self.update_attributes(is_online: true)
+  #end
+  #
+  #def is_offline
+  #  self.update_attributes(is_online: false)
+  #end
+
   private
 
   def user_params

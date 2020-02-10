@@ -9,4 +9,16 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, uniqueness: true, presence: true
   validates :password_digest, presence: true
+
+  #after_update_commit {AppearanceBroadcastJob.perform_later self}
+  def appear
+    self.update(is_online: true)
+    ActionCable.server.broadcast "chat_channel", {event: 'appear', user_id: self.id, name: self.name}
+  end
+
+  def disappear
+    self.update(is_online: false)
+    ActionCable.server.broadcast "chat_channel", {event: 'disappear', user_id: self.id, name: self.name}
+  end
+
 end

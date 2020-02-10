@@ -10,9 +10,44 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
     stream_from 'chat_channel'
+    #:current_user.appear
   end
 
-  def unsubscribed; end
+  def appear(data)
+    #:current_user.appear
+    #print "HEY OH HEY OH HEY OH HEY OH HEY OH~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    #print data
+    #puts data["userId"]
+    tempUser = User.find(data["userId"])
+    tempUser.appear
+    #ActionCable.server.broadcast "chat_channel", {event: 'appear', user_id: data.userId}
+  end
+
+  def disappear(data)
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR!!!"
+    tempUser = User.find(data["userId"])
+    tempUser.disappear
+  end
+
+  def unsubscribed
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    puts "FROM UNSUBSCRIBED"
+    #:current_user.disappear
+  end
 
   def create(opts)
     ChatMessage.create(

@@ -2,10 +2,6 @@ import React, { Component } from "react";
 
 class Modal extends Component {
 
-  onClose = (e) => {
-    this.props.onClose();
-  };
-
   render() {
     if (!this.props.modal) {
       return (
