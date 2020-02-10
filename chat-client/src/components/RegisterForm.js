@@ -36,7 +36,6 @@ class RegisterForm extends React.Component {
       <div className="login-register">
         {this.props.errorText && <p>{this.props.errorText}</p>}
         <form className="login-register-form" onSubmit={(e) => this.props.handleRegister(e, this.state)}>
-          {/* <h2>Register!</h2> */}
           <label htmlFor="name">Username: </label>
           <input
             type="text"

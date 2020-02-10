@@ -24,7 +24,6 @@ class LoginForm extends Component {
     const currentUser = await loginUser(loginData);
     this.props.setUser(currentUser);
 
-    // this.props.history.push('/todos')
   }
 
   render() {
@@ -34,7 +33,6 @@ class LoginForm extends Component {
         <form className="login-register-form" onSubmit={(e) =>
           this.handleLogin(e, { email: this.state.email, password: this.state.password })
         }>
-          {/* <h2>Login!</h2> */}
           <label htmlFor="email">Email: </label>
           <input
             type="text"
