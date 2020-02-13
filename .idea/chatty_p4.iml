@@ -26,7 +26,7 @@
     <orderEntry type="library" scope="PROVIDED" name="bootsnap (v1.4.5, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.4, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.1.4, rbenv: 2.6.4) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.1.5, rbenv: 2.6.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.1.6, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="crass (v1.0.6, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.9.0, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.12.2, rbenv: 2.6.4) [gem]" level="application" />
@@ -44,9 +44,9 @@
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.14.0, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="msgpack (v1.3.3, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nio4r (v2.5.2, rbenv: 2.6.4) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.10.7, rbenv: 2.6.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.10.8, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="puma (v4.3.1, rbenv: 2.6.4) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="rack (v2.1.2, rbenv: 2.6.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rack (v2.2.2, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-cors (v1.1.1, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v1.1.0, rbenv: 2.6.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v6.0.2.1, rbenv: 2.6.4) [gem]" level="application" />
