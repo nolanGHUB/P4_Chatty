@@ -22,14 +22,21 @@ class LoginForm extends Component {
   handleLogin = async (e, loginData) => {
     e.preventDefault();
     const currentUser = await loginUser(loginData);
-    this.props.setUser(currentUser);
+    if (!currentUser.errorMessage) {
+      this.props.setUser(currentUser);
+      this.props.setUserList();
+      this.props.setErrorText('');
+      // this.props.setOnlineUserList();
+    } else {
+      this.props.setErrorText(currentUser.errorMessage)
+    }
 
   }
 
   render() {
     return (
       <div className="login-register">
-        {this.props.errorText && <p>{this.props.errorText}</p>}
+        {this.props.errorText && <div className="error-message">{this.props.errorText}</div>}
         <form className="login-register-form" onSubmit={(e) =>
           this.handleLogin(e, { email: this.state.email, password: this.state.password })
         }>

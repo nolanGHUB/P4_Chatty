@@ -17,7 +17,10 @@ class Modal extends Component {
         <div className="modal-inner">
           <div
             className="modal-button"
-            onClick={e => { this.props.onClose(e) }}>{this.props.topBarText}
+            onClick={e => {
+              this.props.setErrorText("");
+              this.props.onClose(e)
+            }}>{this.props.topBarText}
             <div className='modal-button-box'>X</div>
           </div>
           <div className="modal-child">
