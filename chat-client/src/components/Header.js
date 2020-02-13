@@ -52,29 +52,34 @@ export default class Header extends React.Component {
                 formClicked: 'login',
                 topBarText: 'Sign On'
               })
-            }} className="header-button">LOG IN</div>
+            }} className="header-button">Login</div>
             <div onClick={(e) => {
               this.toggleModal();
               this.setState({
                 formClicked: 'register',
                 topBarText: 'Register'
               })
-            }} className="header-button">SIGN UP</div>
+            }} className="header-button">Register</div>
             <Modal
               modal={this.state.modal}
               onClose={this.toggleModal}
-              topBarText={this.state.topBarText}>
+              topBarText={this.state.topBarText}
+              setErrorText={this.setErrorText}>
               {this.state.formClicked === 'login' ?
                 <LoginForm
                   setUser={this.props.setUser}
                   setErrorText={this.setErrorText}
                   errorText={this.state.errorText}
+                  setUserList={this.props.setUserList}
+                  currentUser={this.currentUser}
                 />
                 :
                 <RegisterForm
                   setUser={this.props.setUser}
                   setErrorText={this.setErrorText}
                   errorText={this.state.errorText}
+                  setUserList={this.props.setUserList}
+                  currentUser={this.currentUser}
                 />
               }
             </Modal>
