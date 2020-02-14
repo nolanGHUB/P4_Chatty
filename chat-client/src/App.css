@@ -73,7 +73,7 @@ html {
 .main-window {
   margin-top: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .friendlist-component {
@@ -85,18 +85,50 @@ html {
   background-color: white;
 }
 
+.friendlist-wrapper {
+  padding: 0.4rem;
+  border: 1px outset;
+  border-top: 0;
+  background-color: rgb(207,206,202);
+  margin-top: -0.1rem;
+  z-index: 13;
+}
+
 .friendlist-tag-wrapper {
   display: flex;
   justify-content: space-between;
+  z-index: 10;
 }
 
-/* .friendlist-onlinetag{
-  background-color: rgb(207,206,202);
+.friendlist-tag {
+  border-top: 1px outset;
+  border-left: 1px outset;
+  border-right: 1px outset;
+  border-radius: 3px;
+  padding: 0.3rem;
+  cursor: pointer;
+  min-width: 3.6rem;
+  display: flex;
+  justify-content: center;
 }
 
-.friendlist-offlinetag{
+.friendlist-tag-people-on {
+  border-right: 2px solid;
+}
 
-} */
+.friendlist-tag-buddies-off {
+  border-bottom: 2px inset;
+}
+
+.friendlist-tag-buddies-on {
+  border-bottom: 0;
+  border-left: 2px solid;
+}
+
+.friendlist-tag-people-off {
+  border-right: 1px inset;
+  border-bottom: 2px inset;
+}
 
 .friendlist-buddy-title {
   border-bottom: 1px groove #666;
@@ -104,6 +136,14 @@ html {
 
 .friendlist div {
   margin: 0 0.2rem;
+}
+
+.friendlist-name {
+  cursor: pointer;
+}
+
+.friendlist-buttons {
+  display: flex;
 }
 
 .chat {
@@ -139,9 +179,16 @@ html {
 
 .chat-button-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: row;
+  max-height: 4rem;
+  justify-content: space-between;
   border-style: groove;
+}
+
+.chat-avatar-gif {
+  width: 4.5rem;
+  /* margin-bottom: 0.3rem; */
+  border-right: 1px groove;
 }
 
 ul.chat-log {
@@ -175,6 +222,20 @@ ul.chat-log {
   margin-left: 0.5rem;
 }
 
+.chat-popup-error {
+  display: flex;
+  flex-direction: column;
+  border: 1px groove;
+  padding: 1rem;
+  background-color: rgb(207,206,202);
+}
+
+.chat-popup-error-button {
+  margin: 1rem 0 0 0;
+  display: flex;
+  align-self: center;
+}
+
 .window {
   display: flex;
 }
@@ -189,7 +250,7 @@ ul.chat-log {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.2)
+  background-color: rgba(0, 0, 0, 0.4)
 }
 
 .modal-inner {
@@ -200,7 +261,7 @@ ul.chat-log {
 }
 
 .modal-child {
-  background-color: white;
+  background-color: rgb(207,206,202);
   margin: 0.4rem;
   /* border: 1px solid black; */
   /* padding-top: 1.5rem; */
@@ -231,6 +292,10 @@ ul.chat-log {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.modal-button-box:active {
+  border: 2px inset rgba(140, 140, 140, 0.865);
+}
+
 
 .login-register {
   width: 100%;
@@ -259,13 +324,7 @@ ul.chat-log {
 }
 
 .form-button {
-  border: 1px solid #000;
-  background: #333;
-  color: #fff;
-  width: 6rem;
-  height: 1.5rem;
-  border-radius: 0.2rem;
-  font-size: 1rem;
+  margin: 0;
 }
 
 button.send {
@@ -278,6 +337,10 @@ button.send {
   border-left: 1px groove;
   padding: 1rem 1rem;
   font-size: 20px;
+}
+
+button.send:active {
+  background-color: rgb(165, 164, 160);
 }
 
 textarea, select, input, button { outline: none; }

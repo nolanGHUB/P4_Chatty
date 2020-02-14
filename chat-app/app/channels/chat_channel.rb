@@ -16,7 +16,7 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def appear(data)
-    @user = User.find(data["userId"])
+    @user = User.find(data["id"])
     @user.appear
   end
 

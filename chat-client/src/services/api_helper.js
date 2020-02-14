@@ -89,3 +89,43 @@ export const getTenMessages = async () => {
     console.error(e.message)
   }
 }
+
+//GET CURRENT USER FRIENDS
+export const getFriends = async (currentUserId) => {
+  try {
+    let friends = await api.get(`/users/${currentUserId}/friends`)
+    return friends.data;
+  } catch (e) {
+    console.error(e.message)
+  }
+}
+
+//ADD FRIEND TO CURRENT USER
+export const addFriend = async (currentUserId, friendId, friendName) => {
+  try {
+    let friendToAdd = await api.post(`/users/${currentUserId}/friends`, { friend_id: friendId, friend_name: friendName })
+    return friendToAdd.data;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
+//DELETE FRIEND THAT BELONGS TO CURRENT USER
+export const removeFriend = async (currentUserId, friendId) => {
+  try {
+    let friendToDelete = await api.delete(`/users/${currentUserId}/friends/${friendId}`)
+    return friendToDelete.data;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
+//GET ONE USER
+export const getOneUser = async (userId) => {
+  try {
+    let user = await api.get(`/users/${userId}`)
+    return user.data;
+  } catch (e) {
+    console.error(e.message);
+  }
+}

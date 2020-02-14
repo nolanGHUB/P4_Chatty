@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   # Model associations
   has_many :chat_messages, foreign_key: :created_by
+  has_many :friends, foreign_key: :user_adding_friend_id
   # Validations
   #validates_presence_of :name, :email, :password_digest
   validates :name, presence: true
@@ -13,12 +14,12 @@ class User < ApplicationRecord
   #after_update_commit {AppearanceBroadcastJob.perform_later self}
   def appear
     self.update(is_online: true)
-    ActionCable.server.broadcast "chat_channel", {event: 'appear', user_id: self.id, name: self.name}
+    ActionCable.server.broadcast "chat_channel", {event: 'appear', id: self.id, name: self.name}
   end
 
   def disappear
     self.update(is_online: false)
-    ActionCable.server.broadcast "chat_channel", {event: 'disappear', user_id: self.id, name: self.name}
+    ActionCable.server.broadcast "chat_channel", {event: 'disappear', id: self.id, name: self.name}
   end
 
 end

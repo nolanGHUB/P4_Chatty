@@ -19,6 +19,8 @@ class RegisterForm extends React.Component {
     if (!currentUser.errorMessage) {
       this.props.setUser(currentUser)
       this.props.setUserList();
+      this.props.setFriendList();
+      this.props.toggleModal();
     } else {
       this.props.setErrorText(currentUser.errorMessage)
     }
@@ -58,7 +60,7 @@ class RegisterForm extends React.Component {
             value={this.state.password}
             onChange={this.handleChange}
           />
-          <button className="form-button">Register</button>
+          <button className="header-button form-button">Register</button>
         </form>
       </div>
     )
