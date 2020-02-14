@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Cable from 'actioncable';
 //api_helper
 import { getTenMessages } from '../services/api_helper'
+//custom components
+import Modal from './Modal'
 
 class Chat extends Component {
   constructor(props) {
@@ -14,13 +16,17 @@ class Chat extends Component {
       chatLogs: [],
       currentChatMessage: '',
       lastAppearEvent: '',
-      haveIAppeared: false
+      haveIAppeared: false,
+      modal: false,
+      iconList: ["images/buddyicons/happydance.gif", "images/buddyicons/breakdance.gif", "images/buddyicons/goofaround.gif", "images/buddyicons/lightsaber.gif", "images/buddyicons/mrt.gif", "images/buddyicons/muffinmass.gif", "images/buddyicons/obama.gif", "images/buddyicons/skate.gif", "images/buddyicons/spaz.gif", "images/buddyicons/spoiled.gif", "images/buddyicons/superpower.gif"],
+      randomIcon: ''
     }
   }
 
   componentDidMount() {
     this.createSocket();
     this.setRecentMessages();
+    this.setIcon();
   }
 
   componentDidUpdate() {
@@ -38,6 +44,13 @@ class Chat extends Component {
     }
   }
 
+  setIcon() {
+    let randomIcon = this.state.iconList[Math.floor(Math.random() * this.state.iconList.length)]
+    this.setState({
+      randomIcon
+    })
+  }
+
   setRecentMessages = async () => {
     const data = await getTenMessages();
     data.map(user =>
@@ -47,7 +60,17 @@ class Chat extends Component {
     );
   }
 
-  createSocket = () => {
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  setErrorText = (errorText) => {
+    //empty function because modal requires it and I don't feel like refactoring it, it gets used properly in Header however here it IS the error text and doesn't need to set anything!
+  }
+
+  createSocket = async () => {
     this.cable = Cable.createConsumer('ws://localhost:3001/cable');
     this.chats = this.cable.subscriptions.create({
       channel: 'ChatChannel'
@@ -55,7 +78,7 @@ class Chat extends Component {
       connected: () => {
         if (this.state.haveIAppeared === false) {
           this.chats.perform('appear', {
-            userId: this.props.currentUser.id
+            id: this.props.currentUser.id
           })
           this.setState({
             haveIAppeared: true
@@ -70,21 +93,24 @@ class Chat extends Component {
           haveIAppeared: false
         })
       },
-      received: (data) => {
+      received: async (data) => {
         if (data.event) {
           if (data.event === 'appear') {
             // console.log(`${data.name} has entered the chat..`)
             this.setState({
-              chatLogs: [...this.state.chatLogs, data]
+              chatLogs: [...this.state.chatLogs, data] // THIS IS FINE
             });
-            this.props.addToUserList(data);
+            // this.props.addToUserList(data); //BAD FIX -fixed?
+            //let oneUser = await getOneUser(data.id); //might be a better way to do this? check against app.js userList instead of using server resources?
+            let userObj = this.props.userList.filter(user => user.id === data.id) //We want the userObj NOT the announcement event Obj!
+            this.props.addToUserList(userObj[0]); //filter returns array, in this case of 1.
           }
           else if (data.event === 'disappear') {
             // console.log(`${data.name} has left the chat..`)
             this.setState({
-              chatLogs: [...this.state.chatLogs, data]
+              chatLogs: [...this.state.chatLogs, data] // THIS IS FINE
             });
-            this.props.removeFromUserList(data);
+            this.props.removeFromUserList(data); //BAD but works fine for our purposes. (two different object comparison but id = id)
           }
         } else {
           this.setState({
@@ -92,41 +118,14 @@ class Chat extends Component {
           });
         }
       },
-      create: function (chatContent, userId) {
+      create: function (chatContent, id) {
         this.perform('create', {
           content: chatContent,
-          created_by: userId
+          created_by: id
         });
       }
     });
   }
-
-  updateCurrentChatMessage(event) {
-    this.setState({
-      currentChatMessage: event.target.value
-    });
-  }
-
-  // handleAppearEvent = (logEvent) => {
-  //   console.log("IM IN HANDLE APPEAR EVENT!")
-  //   console.log(logEvent)
-  //   let lastmsg = this.state.chatLogs[this.state.chatLogs.length - 2];
-  //   console.log("last message: ");
-  //   console.log(lastmsg);
-  //   if (logEvent.event === 'appear' && lastmsg !== logEvent) {
-  //     return (
-  //       <li>
-  //         <i>{logEvent.name} has entered the chat.</i>
-  //       </li>
-  //     )
-  //   } else if (logEvent.event === 'disappear') {
-  //     return (
-  //       <li>
-  //         <i>{logEvent.name} has left the chat.</i>
-  //       </li>
-  //     )
-  //   }
-  // }
 
   renderChatLog = () => {
     return this.state.chatLogs.map((el, key) => {
@@ -163,12 +162,25 @@ class Chat extends Component {
 
   }
 
+  updateCurrentChatMessage(event) {
+    this.setState({
+      currentChatMessage: event.target.value
+    });
+  }
+
   handleSendEvent(event) {
     event.preventDefault();
-    this.chats.create(this.state.currentChatMessage, this.props.currentUser.id);
-    this.setState({
-      currentChatMessage: ''
-    });
+    if (this.state.currentChatMessage) {
+      this.chats.create(this.state.currentChatMessage, this.props.currentUser.id);
+      this.setState({
+        currentChatMessage: ''
+      });
+    } else {
+      console.log("You have to type a message first!");
+      this.setState({
+        modal: true
+      })
+    }
   }
 
   handleChatInputKeyPress(event) {
@@ -184,6 +196,21 @@ class Chat extends Component {
   render() {
     return (
       <div className="chat">
+        {this.state.modal &&
+          <Modal
+            modal={this.state.modal}
+            onClose={this.toggleModal}
+            topBarText="Error!"
+            setErrorText={this.setErrorText}
+          >
+            <div className="chat-popup-error">
+              You have to type a message first!
+              <button onClick={this.toggleModal} className="chat-popup-error-button header-button">
+                Close
+              </button>
+            </div>
+          </Modal>
+        }
         <div className='chat-wrapper'>
           <div className='chat-window' ref={this.chatField}>
             <ul className='chat-log'>
@@ -197,13 +224,13 @@ class Chat extends Component {
             placeholder='Enter your message...'
             className='chat-input' />
           <div className="chat-button-container">
+            <img className="chat-avatar-gif" src={this.state.randomIcon} alt="animated avatar gif"></img>
             <button
               onClick={(e) => this.handleSendEvent(e)}
               className='send'>
               Send
             </button>
           </div>
-
         </div>
       </div>
     )
@@ -211,15 +238,3 @@ class Chat extends Component {
 }
 
 export default Chat
-
-
-// {el.event ?
-//   el.event === 'appear' && this.state.lastAppearEvent !== el.name ?
-//     <li>
-//       <i>{el.name} has entered the chat.</i>
-//     </li>
-//     :
-//     (el.event === 'disappear' &&
-//       <li>
-//         <i>{el.name} has left the chat.</i>
-//       </li>)
