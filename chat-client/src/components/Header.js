@@ -42,7 +42,7 @@ export default class Header extends React.Component {
 
         {this.props.currentUser ?
           <div className="header-welcome">
-            <div className="header-button" onClick={this.handleLogout}>Logout</div>
+            <div className="header-button" onClick={this.props.handleLogout}>Logout</div>
           </div>
           :
           <div className="header-buttons">
@@ -72,6 +72,8 @@ export default class Header extends React.Component {
                   errorText={this.state.errorText}
                   setUserList={this.props.setUserList}
                   currentUser={this.currentUser}
+                  setFriendList={this.props.setFriendList}
+                  toggleModal={this.toggleModal}
                 />
                 :
                 <RegisterForm
@@ -80,6 +82,8 @@ export default class Header extends React.Component {
                   errorText={this.state.errorText}
                   setUserList={this.props.setUserList}
                   currentUser={this.currentUser}
+                  setFriendList={this.props.setFriendList}
+                  toggleModal={this.toggleModal}
                 />
               }
             </Modal>
