@@ -25,8 +25,9 @@ class LoginForm extends Component {
     if (!currentUser.errorMessage) {
       this.props.setUser(currentUser);
       this.props.setUserList();
+      this.props.setFriendList();
       this.props.setErrorText('');
-      // this.props.setOnlineUserList();
+      this.props.toggleModal();
     } else {
       this.props.setErrorText(currentUser.errorMessage)
     }
@@ -54,7 +55,7 @@ class LoginForm extends Component {
             value={this.state.password}
             onChange={this.handleChange}
           />
-          <button className="form-button">Login</button>
+          <button className="header-button form-button">Login</button>
         </form>
       </div>
     )
