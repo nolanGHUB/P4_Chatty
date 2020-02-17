@@ -1,28 +1,29 @@
 html {
-  background: #526977;
-  font-family: 'Helvetica';
-  /* color: #333; */
-  font-size: 20px;
+  background-color: #526977;
+  font-size: 1.2rem;
+  font-family: 'ms-sans-serif.ttf';
 }
 
 .error-message {
   color:red;
-  margin: 1.5rem 0;
+  margin: 0.5rem 0.5rem;
+  font-size: 0.9rem;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
+  font-family: 'ms-sans-serif.ttf';
 }
 
 .header-buttons {
   /* height: 2.5rem; */
   display: flex;
+
 }
 
 .header-button {
   display: flex;
-  font-size: 18px;
   justify-content: center;
   align-items: center;
   border-top: solid 2px white;
@@ -35,6 +36,7 @@ html {
   margin: 1rem 1rem;
   box-shadow: 0.1rem 0.1rem;
   cursor: pointer;
+  font-size: 0.9rem;
 }
 
 .header-button:active {
@@ -59,9 +61,8 @@ html {
 }
 
 .header-logo-text {
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: white;
-  /* margin-left: -1.0rem; */
   z-index: 9;
 }
 
@@ -78,11 +79,61 @@ html {
 
 .friendlist-component {
   background-color: rgb(207,206,202);
+  max-width: 12rem;
+}
+
+.friendlist-welcome-text {
+  margin: 0;
+}
+
+.friendlist-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  height: 6rem;
+  text-align: center;
+}
+
+.friendlist-header > button {
+  padding: 0;
+  height: 3rem;
+  border: 3px groove;
+  background-color: rgb(255, 255, 255);
+}
+
+.friendlist-header:before {
+  background: url('./background/aologo.png');
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0.1;
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover;  
+}
+
+.friendlist-header-opacity-cover {
+  z-index: 21;
+  background-color: rgb(207,206,202);
 }
 
 .friendlist {
   border: 2px inset rgba(116, 116, 116, 0.865);
   background-color: white;
+  /* background-image: url('./background/aologo.png'); */
+  min-height: 10rem;
+  min-width: 9rem;
 }
 
 .friendlist-wrapper {
@@ -107,7 +158,7 @@ html {
   border-radius: 3px;
   padding: 0.3rem;
   cursor: pointer;
-  min-width: 3.6rem;
+  width: 50%;
   display: flex;
   justify-content: center;
 }
@@ -142,8 +193,39 @@ html {
   cursor: pointer;
 }
 
+.friendlist-name-selected {
+  background-color: rgba(248,253,3,0.75);
+}
+
 .friendlist-buttons {
   display: flex;
+}
+
+.friendlist-icons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0 0 0;
+  border: 1px groove;
+}
+
+.friendlist-button {
+  border-right: 1px groove;
+}
+
+.friendlist-icons-wrapper > button{
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  padding: 2px;
+  min-height: 3rem;
+}
+
+.friendlist-icons {
+  width: 2rem;
+}
+
+.friendlist-icons:hover {
+  border: 1px groove;
 }
 
 .chat {
@@ -161,7 +243,7 @@ html {
 }
 
 .chat-window {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'ms-sans-serif.ttf';
   height: 10rem;
   background-color: white;
   border: 2px inset rgba(116, 116, 116, 0.865);
@@ -222,6 +304,21 @@ ul.chat-log {
   margin-left: 0.5rem;
 }
 
+.chat-send {
+  background-color: rgb(207,206,202);
+  font-weight: 600;
+  width: 5rem;
+  color: black;
+  border-left: 1px groove;
+  padding: 1rem 1rem;
+  font-size: 20px;
+  font-family: 'ms-sans-serif.ttf';
+}
+
+.chat-send:active {
+  background-color: rgb(165, 164, 160);
+}
+
 .chat-popup-error {
   display: flex;
   flex-direction: column;
@@ -238,6 +335,7 @@ ul.chat-log {
 
 .window {
   display: flex;
+  font-family: 'ms-sans-serif.ttf';
 }
 
 .modal {
@@ -250,7 +348,8 @@ ul.chat-log {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4)
+  background-color: rgba(0, 0, 0, 0.4);
+
 }
 
 .modal-inner {
@@ -270,11 +369,11 @@ ul.chat-log {
 .modal-button {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 0.2rem;
   padding: 0.1rem;
   font-size: 1rem;
   padding-left: 0.2rem;
-  /* color: rgb(51, 50, 50); */
   color: white;
   background: rgb(16,19,68);
   background: linear-gradient(90deg, rgba(16,19,68,1) 0%, rgba(85,116,173,1) 49%, rgba(180,208,242,1) 100%);
@@ -288,7 +387,8 @@ ul.chat-log {
   color: black;
   /* line-height: unset; */
   font-weight: 700;
-  font-size: 16px;
+  font-size: 1rem;
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -296,51 +396,47 @@ ul.chat-log {
   border: 2px inset rgba(140, 140, 140, 0.865);
 }
 
-
 .login-register {
-  width: 100%;
+  max-width: 12rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 3.5rem;
+}
+
+.login-logo {
+  width: 100%;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px groove;
 }
 
 .login-register-form {
   display: flex;
   flex-direction: column;
-  margin: 0 2rem;
+  margin-left: 0;
+  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  width: 95%;
 }
 
 .login-register-form > input {
-  border-radius: 0.2rem;
-  height: 2rem;
+  height: 1.5rem;
   padding: 0;
   background-color: rgb(238, 238, 238);
   color: black;
-  border: 1px solid rgba(99, 99, 99, 0.913);
-  margin: 1rem 0;
-  min-width: 12rem;
+  border: 3px inset rgba(208, 208, 208, 0.872);
+  margin: 0.1rem 0 0.8rem 0;
+  font-size: 1rem;
+  padding-left: 0.5rem;
 }
 
 .form-button {
   margin: 0;
+  font-size: 0.8rem;
 }
 
-button.send {
-  /* display: flex;
-  align-self: flex-end; */
-  background-color: rgb(207,206,202);
-  font-weight: 600;
-  width: 5rem;
-  color: black;
-  border-left: 1px groove;
-  padding: 1rem 1rem;
-  font-size: 20px;
-}
-
-button.send:active {
-  background-color: rgb(165, 164, 160);
+.updateusername-component {
+  max-width: 375px;
 }
 
 textarea, select, input, button { outline: none; }
