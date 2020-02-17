@@ -6,10 +6,16 @@ class LoginForm extends Component {
   constructor(props) {
     super(props)
 
+    this.emailRef = React.createRef();
+
     this.state = {
       email: '',
       password: ''
     }
+  }
+
+  componentDidMount() {
+    this.emailRef.current.focus();
   }
 
   handleChange = (e) => {
@@ -37,12 +43,14 @@ class LoginForm extends Component {
   render() {
     return (
       <div className="login-register">
+        <img className="login-logo" alt="login aim logo" src="images/sign-on.png"></img>
         {this.props.errorText && <div className="error-message">{this.props.errorText}</div>}
         <form className="login-register-form" onSubmit={(e) =>
           this.handleLogin(e, { email: this.state.email, password: this.state.password })
         }>
           <label htmlFor="email">Email: </label>
           <input
+            ref={this.emailRef}
             type="text"
             name="email"
             value={this.state.email}
@@ -55,7 +63,7 @@ class LoginForm extends Component {
             value={this.state.password}
             onChange={this.handleChange}
           />
-          <button className="header-button form-button">Login</button>
+          <button className="header-button form-button">Sign On</button>
         </form>
       </div>
     )
