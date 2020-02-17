@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom'
+import './fonts/px_sans_nouveaux.ttf';
+import './fonts/FuturaStd-Medium.otf';
+import './fonts/ms-sans-serif.ttf';
 
 ReactDOM.render(
   <Router>
