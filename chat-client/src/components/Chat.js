@@ -12,6 +12,7 @@ class Chat extends Component {
 
     this.chatField = React.createRef();
 
+
     this.state = {
       chatLogs: [],
       currentChatMessage: '',
@@ -27,14 +28,18 @@ class Chat extends Component {
     this.createSocket();
     this.setRecentMessages();
     this.setIcon();
+
+    this.imrcv = new Audio('sounds/imrcv.wav')
+    this.imsend = new Audio('sounds/imsend.wav')
+    this.imrcv.volume = 0.4;
+    this.imsend.volume = 0.4;
+    // this.audio.load();
   }
 
   componentDidUpdate() {
     this.scrollToBottom();
     if (this.props.hasActivelyLoggedOut === true) {
-      // this.chats.perform('disappear', {
-      //   userId: this.props.currentUser.id
-      // })
+
       this.setState({
         haveIAppeared: false
       })
@@ -96,17 +101,19 @@ class Chat extends Component {
       received: async (data) => {
         if (data.event) {
           if (data.event === 'appear') {
-            // console.log(`${data.name} has entered the chat..`)
             this.setState({
               chatLogs: [...this.state.chatLogs, data] // THIS IS FINE
             });
-            // this.props.addToUserList(data); //BAD FIX -fixed?
-            //let oneUser = await getOneUser(data.id); //might be a better way to do this? check against app.js userList instead of using server resources?
             let userObj = this.props.userList.filter(user => user.id === data.id) //We want the userObj NOT the announcement event Obj!
-            this.props.addToUserList(userObj[0]); //filter returns array, in this case of 1.
+            if (!userObj[0]) { // only true when it's a new user that was not added to the original userList at componentDidMount in app.js
+              this.props.addToUserList({ id: data.id, name: data.name, email: "new", is_online: true })
+              this.props.addToOnlineUserLists({ id: data.id, name: data.name, email: "new", is_online: true })
+            } else {
+              this.props.addToOnlineUserLists(userObj[0]); //filter returns array, in this case of 1.
+            }
+
           }
           else if (data.event === 'disappear') {
-            // console.log(`${data.name} has left the chat..`)
             this.setState({
               chatLogs: [...this.state.chatLogs, data] // THIS IS FINE
             });
@@ -116,6 +123,10 @@ class Chat extends Component {
           this.setState({
             chatLogs: [...this.state.chatLogs, data]
           });
+          if (data.name !== this.props.currentUser.name) {
+            this.props.playSound(this.imrcv);
+          }
+
         }
       },
       create: function (chatContent, id) {
@@ -175,6 +186,7 @@ class Chat extends Component {
       this.setState({
         currentChatMessage: ''
       });
+      this.props.playSound(this.imsend)
     } else {
       console.log("You have to type a message first!");
       this.setState({
@@ -227,7 +239,7 @@ class Chat extends Component {
             <img className="chat-avatar-gif" src={this.state.randomIcon} alt="animated avatar gif"></img>
             <button
               onClick={(e) => this.handleSendEvent(e)}
-              className='send'>
+              className='chat-send'>
               Send
             </button>
           </div>
