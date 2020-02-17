@@ -22,7 +22,7 @@ export const loginUser = async (loginData) => {
   } catch (e) {
     console.log(e.response);
     if (e.response && e.response.status === 401) {
-      return { errorMessage: `Email or password is incorrect.` };
+      return { errorMessage: `Email/password is incorrect, or user is already online!` };
     }
   }
 }
@@ -125,6 +125,16 @@ export const getOneUser = async (userId) => {
   try {
     let user = await api.get(`/users/${userId}`)
     return user.data;
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
+//UPDATE USERNAME
+export const updateUsername = async (currentUserId, updatedName) => {
+  try {
+    let updateNameSuccess = await api.put(`/users/${currentUserId}`, { name: updatedName })
+    return updateNameSuccess.data;
   } catch (e) {
     console.error(e.message);
   }
