@@ -1,5 +1,4 @@
 import React from 'react'
-
 //custom components
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
@@ -52,7 +51,7 @@ export default class Header extends React.Component {
                 formClicked: 'login',
                 topBarText: 'Sign On'
               })
-            }} className="header-button">Login</div>
+            }} className="header-button">Sign On</div>
             <div onClick={(e) => {
               this.toggleModal();
               this.setState({
