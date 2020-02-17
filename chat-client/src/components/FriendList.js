@@ -18,8 +18,8 @@ export default class FriendList extends Component {
       clickedPersonName: '',
       previousTarget: '',
       toggleUpdateNameModal: false,
-      leftButtonText: 'Change Name',
-      rightButtonText: 'Add Buddy',
+      addBuddyText: 'Add Buddy',
+      removeBuddyText: 'Remove Buddy',
       errorText: ''
     }
   }
@@ -68,7 +68,7 @@ export default class FriendList extends Component {
         this.setState({
           clickedPersonId: user.id,
           clickedPersonName: user.name,
-          modal: true
+          // modal: true
         })
       } else {
         this.setState({
@@ -80,7 +80,7 @@ export default class FriendList extends Component {
       this.setState({
         clickedPersonId: user.id,
         clickedPersonName: user.name,
-        modal: true
+        // modal: true
       })
     }
   }
@@ -191,7 +191,7 @@ export default class FriendList extends Component {
           <div className="friendlist-icons-wrapper">
             <button onClick={(e) => this.setNameChange(e)} className="chat-send">Username Change</button>
             <button className="friendlist-button chat-send friendlist-buttons">Direct Message</button>
-            <button className="chat-send friendlist-buttons">{this.state.rightButtonText}</button>
+            <button className="chat-send friendlist-buttons" onClick={this.state.clickedPersonId && this.toggleModal}>{this.state.onlineText === "Buddies" ? this.state.removeBuddyText : this.state.addBuddyText}</button>
           </div>
         </div>
 
