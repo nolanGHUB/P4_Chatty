@@ -16,20 +16,19 @@ class UsersController < ApplicationController
     json_response(response, :created)
   end
 
-  # GET /user/:id
+  # GET /users/:id
   def show
     user = User.find(params[:id])
     clean_user = {"id" => user.id, "name" => user.name, "email" => user.email, "is_online" => user.is_online}
     json_response(clean_user)
   end
 
-  #def is_online
-  #  self.update_attributes(is_online: true)
-  #end
-  #
-  #def is_offline
-  #  self.update_attributes(is_online: false)
-  #end
+  # PUT /users/:id
+  def update
+    user = User.find(params[:id])
+    user.update(user_params)
+    json_response(status: 'SUCCESS', message: 'updated username', data: user.name)
+  end
 
   private
 
