@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 //custom components
 import Modal from './Modal'
+import UpdateUsername from './UpdateUsername'
 
 export default class FriendList extends Component {
   constructor(props) {
@@ -14,7 +15,12 @@ export default class FriendList extends Component {
       modal: false,
       topBarText: "Add Buddy",
       clickedPersonId: '',
-      clickedPersonName: ''
+      clickedPersonName: '',
+      previousTarget: '',
+      toggleUpdateNameModal: false,
+      leftButtonText: 'Change Name',
+      rightButtonText: 'Add Buddy',
+      errorText: ''
     }
   }
 
@@ -42,24 +48,22 @@ export default class FriendList extends Component {
     })
   }
 
-  setErrorText = (errorText) => {
-    // non functional function I dont want this to do anything but modal needs it for other uses in other components...
-  }
+  handleClickedBuddy = (user, e) => {
+    if (this.state.previousTarget) {
+      this.state.previousTarget.classList.remove('friendlist-name-selected');
+      this.setState({
+        previousTarget: e.target
+      })
+      e.target.classList.add('friendlist-name-selected');
+    } else {
+      e.target.classList.add('friendlist-name-selected');
+      this.setState({
+        previousTarget: e.target
+      })
+    }
 
-  handleClickedBuddy = (user) => {
-    // if (this.state.topBarText === "Add Buddy") {
-    //   //add new friend methods
-    //   this.setState({
-    //     modal: true
-    //   })
-    // } else if (this.state.topBarText === "Remove Buddy") {
-    //   //remove friend methods
-    // }
-
-    //make it so div can be colored blue! :)
-    //move already-friend check to here instead.
     if (this.state.onlineText === "People") { //if clicking on a person not a friend
-      //is this person already a friend???
+      //is this person already a friend?
       if (!this.props.friendList.some(friend => parseInt(friend.friend_id) === user.id)) {
         this.setState({
           clickedPersonId: user.id,
@@ -79,7 +83,6 @@ export default class FriendList extends Component {
         modal: true
       })
     }
-
   }
 
   handleAddBuddy = () => {
@@ -90,6 +93,13 @@ export default class FriendList extends Component {
   handleRemoveBuddy = () => {
     let friend = this.props.friendList.filter(friend => parseInt(friend.friend_id) === this.state.clickedPersonId); //returns array of length 1, friend is friend object **CAREFUL**
     this.props.removeFromFriendList(friend[0].id, this.state.clickedPersonId); //(friend ID friend object, USER ID to be removed user object.) - sorry.
+    this.toggleModal();
+  }
+
+  setNameChange = (e) => {
+    this.setState({
+      toggleUpdateNameModal: true
+    })
   }
 
   toggleModal = () => {
@@ -97,6 +107,19 @@ export default class FriendList extends Component {
       modal: !this.state.modal
     });
   };
+
+  toggleUpdateNameModal = () => {
+    this.setState({
+      toggleUpdateNameModal: !this.state.toggleUpdateNameModal,
+      errorText: ''
+    });
+  };
+
+  setErrorText = (errorText) => {
+    this.setState({
+      errorText
+    })
+  }
 
   render() {
     return (
@@ -112,7 +135,7 @@ export default class FriendList extends Component {
               <div>
                 Add {this.state.clickedPersonName} to your Buddy List?
                 <div className="friendlist-buttons"><button onClick={() =>
-                  this.props.addToFriendList(this.state.clickedPersonId, this.state.clickedPersonName)} className="header-button">Yes</button>
+                  this.handleAddBuddy()} className="header-button">Yes</button>
                   <button onClick={this.toggleModal} className="header-button">No</button></div>
               </div>
               :
@@ -122,8 +145,21 @@ export default class FriendList extends Component {
                   <button onClick={this.toggleModal} className="header-button">No</button></div>
               </div>
             }
-
           </Modal>
+        }
+        {this.state.toggleUpdateNameModal &&
+          <UpdateUsername
+            currentUser={this.props.currentUser}
+            updateStateListsForNewName={this.props.updateStateListsForNewName}
+            toggleUpdateNameModal={this.toggleUpdateNameModal}
+            setErrorText={this.setErrorText}
+            errorText={this.state.errorText}
+          />
+        }
+        {this.props.currentUser &&
+          <div className="friendlist-header">
+            <h4 className="friendlist-welcome-text">Welcome, {this.props.currentUser.name}</h4>
+          </div>
         }
         <div className="friendlist-tag-wrapper">
           <div onClick={() => this.handlePeopleClick()} ref={this.people} className="friendlist-tag friendlist-tag-people-on">
@@ -137,21 +173,28 @@ export default class FriendList extends Component {
           <div className="friendlist">
             <div className="friendlist-buddy-title">{this.state.onlineText} Online:</div>
             {this.props.onlineUserList && this.state.onlineText === "People" && this.props.onlineUserList.map(user =>
-              <div onClick={() => {
-                this.handleClickedBuddy(user);
+              <div onClick={(e) => {
+                this.handleClickedBuddy(user, e);
               }} className="friendlist-name" key={`onlineUser_${user.id}`}>
-                {this.props.currentUser.name !== user.name && user.name}
+                {/* {this.props.currentUser.name !== user.name && user.name} */}
+                {user.name}
               </div>
             )}
             {this.props.onlineFriendList && this.state.onlineText === "Buddies" && this.props.onlineFriendList.map(user =>
-              <div onClick={() => {
-                this.handleClickedBuddy(user);
+              <div onClick={(e) => {
+                this.handleClickedBuddy(user, e);
               }} className="friendlist-name" key={`onlineUser_${user.id}`}>
                 {this.props.currentUser.name !== user.name && user.name}
               </div>
             )}
           </div>
+          <div className="friendlist-icons-wrapper">
+            <button onClick={(e) => this.setNameChange(e)} className="chat-send">Username Change</button>
+            <button className="friendlist-button chat-send friendlist-buttons">Direct Message</button>
+            <button className="chat-send friendlist-buttons">{this.state.rightButtonText}</button>
+          </div>
         </div>
+
       </div >
     )
   }
