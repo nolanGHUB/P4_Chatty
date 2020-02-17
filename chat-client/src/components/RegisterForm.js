@@ -6,11 +6,17 @@ class RegisterForm extends React.Component {
   constructor(props) {
     super(props)
 
+    this.usernameRef = React.createRef();
+
     this.state = {
       name: '',
       email: '',
       password: '',
     }
+  }
+
+  componentDidMount() {
+    this.usernameRef.current.focus();
   }
 
   handleRegister = async (e, registerData) => {
@@ -37,10 +43,12 @@ class RegisterForm extends React.Component {
   render() {
     return (
       <div className="login-register">
+        <img className="login-logo" alt="login aim logo" src="images/sign-on.png"></img>
         {this.props.errorText && <p>{this.props.errorText}</p>}
         <form className="login-register-form" onSubmit={(e) => this.handleRegister(e, this.state)}>
           <label htmlFor="name">Username: </label>
           <input
+            ref={this.usernameRef}
             type="text"
             name="name"
             value={this.state.name}
