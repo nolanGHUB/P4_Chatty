@@ -17,12 +17,18 @@ class App extends Component {
       userList: [], //user objects
       onlineUserList: [], //user objects
       friendList: [], //friend objects {id: i, user_adding_friend_id: "num", friend_id: "num", friend_name: "s"} 
-      hasActivelyLoggedOut: false
+      hasActivelyLoggedOut: false,
+      onlineFriendList: []
     }
   }
 
   componentDidMount() {
     verifyUser();
+
+    this.doorOpen = new Audio('sounds/dooropen.wav');
+    this.doorSlam = new Audio('sounds/doorslam.wav');
+    this.doorOpen.volume = 0.4;
+    this.doorSlam.volume = 0.4;
   }
 
   setUser = (currentUser) => {
@@ -60,69 +66,50 @@ class App extends Component {
   }
 
   addToUserList = (user) => {
-    // if (this.state.onlineUserList.filter(userx => (userx.id === user.id))) { //if person is already in online user list...
-    //   if (this.state.friendList.some(friend => user.id === parseInt(friend.friend_id))) { // if person is in users friend list..
-    //     this.setState({
-    //       // onlineUserList: [...this.state.onlineUserList, user],
-    //       onlineFriendList: [...this.state.onlineFriendList, user] // add user to online friends list
-    //     })
-    //   } else { // if person is not already on the online list...
-    //     this.setState({
-    //       onlineUserList: [...this.state.onlineUserList, user] // add that user to the online list..
-    //     })
-    //   }
-    // } OLD SHIT, REPLACED BELOW.
 
+    this.setState({
+      userList: [...this.state.userList, user]
+    })
+  }
 
-    //not already in onlineUserList
-    //Friend?
-    //add to both
-    //else
-    //add to userlist
-
-    //friend?
-    //online? lol fuck it.
-    // if (!this.state.onlineUserList.some(userx => (userx.id === user.id))) { //user objects, some() returns boolean
-    //   if (this.state.friendList.some(friend => user.id === parseInt(friend.friend_id))) { //friend objects
-    //     this.setState({
-    //       onlineFriendList: [...this.state.onlineFriendList, user],
-    //       onlineUserList: [...this.state.onlineUserList, user]
-    //     })
-    //   } else {
-    //     this.setState({
-    //       onlineUserList: [...this.state.onlineUserList, user]
-    //     })
-    //   }
-    // }
-
-
-
+  addToOnlineUserLists = (user) => {
     //ONLINE FRIEND AND !ONLINEFRIEND - ADD TO FRIEND
     //ONLINE !FRIEND - DO NOTHING
     //!ONLINE FRIEND - ADD TO BOTH
     //!ONLINE !FRIEND - ADD TO ONLINEUSER
+
+    //ONLINE FRIEND AND ONLINEFRIEND || ONLINE & !FRIEND are the two situations that are fired during a name-update-announcement. Neither of which do anything, so lets do it up top specifically for this.
+    //if ( online && onlineUserList.some(userx => { userx.id === user.id && userx.name !== user.name})) -- this seems too exhaustive.
+
+
+    let onlinefriend = false;
     if (user.id !== this.state.currentUser.id) {
-      const online = this.state.onlineUserList.some(userx => (userx.id === user.id)); // true/false if in friends list
-      const friend = this.state.friendList.some(friend => user.id === parseInt(friend.friend_id)); //true/false if already online
-      const onlinefriend = this.state.onlineFriendList.some(onlineFriend => (onlineFriend.id === user.id)); //true/false if friend is already online UGH
-      console.log("friend:" + friend + " online:" + online + " onlinefriend:" + onlinefriend)
+      const online = this.state.onlineUserList.some(userx => (userx.id === user.id)); // true/false if already online
+      const friend = this.state.friendList.some(friend => user.id === parseInt(friend.friend_id)); //true/false if in currentUser's friend list
+      if (this.state.onlineFriendList) {
+        onlinefriend = this.state.onlineFriendList.some(onlineFriend => (onlineFriend.id === user.id)); //true/false if friend is already online UGH
+      }
+      // console.log("friend:" + friend + " online:" + online + " onlinefriend:" + onlinefriend)
 
       if (online && friend && !onlinefriend) {
-        console.log("already online but is a friend but friend is not already online, adding to friends.")
+        // console.log("already online but is a friend but friend is not already online, adding to friends.")
         this.setState({
           onlineFriendList: [...this.state.onlineFriendList, user]
         })
+        this.playSound(this.doorOpen);
       } else if (!online && friend) {
-        console.log("not already online but is a friend, adding to both.")
+        // console.log("not already online but is a friend, adding to both.")
         this.setState({
           onlineFriendList: [...this.state.onlineFriendList, user],
           onlineUserList: [...this.state.onlineUserList, user]
         })
+        this.playSound(this.doorOpen);
       } else if (!online && !friend) {
-        console.log("not already online and not a friend, so adding to people")
+        // console.log("not already online and not a friend, so adding to people")
         this.setState({
           onlineUserList: [...this.state.onlineUserList, user]
         })
+        this.playSound(this.doorOpen);
       }
     }
 
@@ -131,10 +118,7 @@ class App extends Component {
   addToFriendList = async (friendId, friendName) => {
     let addedToDb = await addFriend(this.state.currentUser.id, friendId, friendName); //friend object
     let friendToAdd = this.state.onlineUserList.filter(user => user.id === friendId); //user object
-    // console.log("FRIEND ADDED: ---V")
-    // console.log(addedToDb);
-    // console.log("ADDING THIS TO LOCAL STATES ---V")
-    // console.log(friendToAdd);
+
     this.setState({
       friendList: [...this.state.friendList, addedToDb], //array of friend objects
       onlineFriendList: [...this.state.onlineFriendList, friendToAdd[0]] //array of user objects (that are friends & online)
@@ -145,7 +129,7 @@ class App extends Component {
     await removeFriend(this.state.currentUser.id, friendId);
     let newOnlineFriendList = this.state.onlineFriendList.filter(friend => friend.id !== friendToRemoveUserId); //user objects
     let newFriendList = this.state.friendList.filter(friend => friend.id !== friendId); //new array that's everything except for the one being removed (friend objects)
-    // console.log(friendToDelete + " DELETED! ");
+
     this.setState({
       friendList: newFriendList, //friend objects
       onlineFriendList: newOnlineFriendList //user objects
@@ -160,15 +144,36 @@ class App extends Component {
       onlineUserList: newUserList, //user objects
       onlineFriendList: newFriendList //user objects
     })
-    // console.log(`trying to remove${user}`);
-    // console.log(this.state.onlineUserList);
+    this.playSound(this.doorSlam);
+  }
+
+  updateStateListsForNewName = (newName) => {
+    const newUser = this.state.currentUser;
+    newUser.name = newName;
+    this.setState({
+      currentUser: newUser
+    })
+  }
+
+  playSound = (sound) => {
+    const audioPromise = sound.play()
+    if (audioPromise !== undefined) {
+      audioPromise
+        .then(_ => {
+          // autoplay started
+        })
+        .catch(err => {
+          // catch dom exception
+          console.info(err)
+        })
+    }
   }
 
   handleLogout = () => {
     // console.log("FROM LOGOUT");
     // this.setUser(null); // now handled in Chat component because if you do it here it immediately "closes" the chat component before the socket disconnect can occur.
     this.setState({
-      hasActivelyLoggedOut: true
+      hasActivelyLoggedOut: true //effectively a sent message from App.js child component: Chat, saying hey, user has logged out!, most of which is handled inside Chat already.
     })
     localStorage.removeItem('authToken');
     localStorage.removeItem('name');
@@ -177,6 +182,9 @@ class App extends Component {
   }
 
   render() {
+    // console.log(this.state.currentUser) {auth_token: "", name: "", email: "", id: #}
+    // console.log(this.state.userList) {id: #, name: "", email: "", is_online: t/f}
+    // console.log(this.state.onlineUserList)
     return (
       <div className='App'>
 
@@ -198,13 +206,15 @@ class App extends Component {
               <Chat
                 currentUser={this.state.currentUser}
                 handleLogout={this.handleLogout}
-                addToUserList={this.addToUserList}
+                addToOnlineUserLists={this.addToOnlineUserLists}
                 removeFromUserList={this.removeFromUserList}
                 hasActivelyLoggedOut={this.state.hasActivelyLoggedOut}
                 setHasActivelyLoggedOut={this.setHasActivelyLoggedOut}
                 setUser={this.setUser}
                 onlineUserList={this.onlineUserList}
                 userList={this.state.userList}
+                addToUserList={this.addToUserList}
+                playSound={this.playSound}
               />
             </Window>
             <Window
@@ -220,6 +230,7 @@ class App extends Component {
                 friendList={this.state.friendList}
                 addToFriendList={this.addToFriendList}
                 removeFromFriendList={this.removeFromFriendList}
+                updateStateListsForNewName={this.updateStateListsForNewName}
               />
             </Window>
           </div>
