@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'px-sans-nouveaux';
+  src: local('px_sans_nouveaux.ttf'), url(./fonts/px_sans_nouveaux.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'FuturaStd-Medium';
+  src: local('FuturaStd-Medium.otf'), url(./fonts/FuturaStd-Medium.otf) format('opentype');
+}
+@font-face {
+  font-family: 'ms-sans-serif';
+  src: local('ms-sans-serif.ttf'), url(./fonts/ms-sans-serif.ttf) format('truetype');
+}
