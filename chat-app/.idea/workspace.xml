@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4ceb39e6-ec70-4de4-98cd-4fc6acc8157d" name="Default Changelist" comment="" />
+    <list default="true" id="4ceb39e6-ec70-4de4-98cd-4fc6acc8157d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/chat-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chat-app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/04351310-309e-43a0-b2f5-f1c5d1c5b172.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/04351310-309e-43a0-b2f5-f1c5d1c5b172.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/authenticate_user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/authenticate_user.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/channels/application_cable/connection.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/channels/application_cable/connection.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/channels/chat_channel.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/channels/chat_channel.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/jobs/appearance_broadcast_job.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/jobs/appearance_broadcast_job.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/development.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db/development.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log/development.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/development.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/20/d1fb940565582c" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/20/d1fb940565582c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/6e/391377fc7fcd0e" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/6e/391377fc7fcd0e" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/6e/43f02730d2be09" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/6e/43f02730d2be09" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/78/747159ed046a74" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/78/747159ed046a74" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/d4/c09623ab0ef72e" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/d4/c09623ab0ef72e" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/e5/c0bcd615468ad3" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/e5/c0bcd615468ad3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/f8/e2a4239bfa52e1" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/f8/e2a4239bfa52e1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-load-path-cache" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-load-path-cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/components/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/Chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/components/FriendList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/FriendList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/components/LoginForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/LoginForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/components/RegisterForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/RegisterForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/services/api_helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/services/api_helper.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,17 +51,28 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand />
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Rails chat-app: development" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
     <select />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1XTwrLpuckbKHWcvzxjd22mKQlg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RunManager" selected="Rails.Development: chat-app">
@@ -135,7 +179,12 @@
       <list>
         <serviceView>
           <treeState>
-            <expand />
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:identifier.sqlite" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
             <select />
           </treeState>
         </serviceView>
@@ -155,6 +204,7 @@
       <updated>1581083590335</updated>
       <workItem from="1581083594618" duration="982000" />
       <workItem from="1581094254704" duration="742000" />
+      <workItem from="1581717561799" duration="9193000" />
     </task>
     <servers />
   </component>
@@ -162,9 +212,13 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="326" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581095119125">
+    <state x="326" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581718358834">
       <screen x="0" y="23" width="1680" height="986" />
     </state>
-    <state x="326" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.986@0.23.1680.986" timestamp="1581095119125" />
+    <state x="326" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.986@0.23.1680.986" timestamp="1581718358834" />
+    <state x="879" y="447" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581914343014">
+      <screen x="0" y="23" width="1920" height="1016" />
+    </state>
+    <state x="879" y="447" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.23.1920.1057/0.23.1920.1016@0.23.1920.1016" timestamp="1581914343014" />
   </component>
 </project>
