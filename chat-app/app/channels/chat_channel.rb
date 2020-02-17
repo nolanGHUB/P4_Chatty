@@ -21,7 +21,7 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def disappear(data)
-    puts "FROM DISAPPEAR!!!"
+    puts "FROM DISAPPEAR"
   end
 
   def unsubscribed
