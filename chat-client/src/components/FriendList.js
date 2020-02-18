@@ -133,7 +133,7 @@ export default class FriendList extends Component {
   }
 
   render() {
-    console.log(this.props.clickedPersonId);
+    // console.log(this.props.clickedPersonId);
     return (
       <div className="friendlist-component">
         {this.state.modal &&
@@ -201,8 +201,12 @@ export default class FriendList extends Component {
             )}
           </div>
           <div className="friendlist-icons-wrapper">
-            <button onClick={(e) => this.setNameChange(e)} className="chat-send">Username Change</button>
-            <button className="friendlist-button chat-send friendlist-buttons">Direct Message</button>
+            <button onClick={(e) => this.setNameChange(e)} className="chat-send">Change Name</button>
+            <button className="friendlist-button chat-send friendlist-buttons" onClick={() => {
+              this.props.setDestination(this.props.clickedPersonId)
+              this.props.setChatBar(this.state.clickedPersonName)
+            }}>Direct Message</button>
+            {/* <button className="friendlist-button chat-send friendlist-buttons" onClick={() => this.props.setDestination(0)}>Group</button> */}
             <button className="chat-send friendlist-buttons" onClick={this.addRemoveBuddyClick}>{this.state.onlineText === "Buddies" ? this.state.removeBuddyText : this.state.addBuddyText}</button>
           </div>
         </div>
