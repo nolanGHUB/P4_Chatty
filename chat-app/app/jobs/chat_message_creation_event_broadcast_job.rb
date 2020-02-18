@@ -10,6 +10,8 @@ class ChatMessageCreationEventBroadcastJob < ApplicationJob
                    id: chat_message.id,
                    created_at: chat_message.created_at,
                    content: chat_message.content,
-                   name: name.name)
+                   name: name.name,
+                   user_id: name.id,
+                   destination: chat_message.destination)
   end
 end
