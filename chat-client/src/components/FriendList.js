@@ -14,7 +14,6 @@ export default class FriendList extends Component {
       onlineText: "People",
       modal: false,
       topBarText: "Add Buddy",
-      clickedPersonId: '',
       clickedPersonName: '',
       previousTarget: '',
       toggleUpdateNameModal: false,
@@ -32,8 +31,11 @@ export default class FriendList extends Component {
 
     this.setState({
       onlineText: "People",
-      topBarText: "Add Buddy"
+      topBarText: "Add Buddy",
+      clickedPersonName: ''
     })
+    this.props.setClickedPersonId(0);
+    this.state.previousTarget && this.state.previousTarget.classList.remove('friendlist-name-selected');
   }
 
   handleBuddyClick() {
@@ -44,8 +46,11 @@ export default class FriendList extends Component {
 
     this.setState({
       onlineText: "Buddies",
-      topBarText: "Remove Buddy"
+      topBarText: "Remove Buddy",
+      clickedPersonName: ''
     })
+    this.props.setClickedPersonId(0);
+    this.state.previousTarget && this.state.previousTarget.classList.remove('friendlist-name-selected');
   }
 
   handleClickedBuddy = (user, e) => {
@@ -65,35 +70,41 @@ export default class FriendList extends Component {
     if (this.state.onlineText === "People") { //if clicking on a person not a friend
       //is this person already a friend?
       if (!this.props.friendList.some(friend => parseInt(friend.friend_id) === user.id)) {
+        this.props.setClickedPersonId(user.id)
         this.setState({
-          clickedPersonId: user.id,
           clickedPersonName: user.name,
-          // modal: true
         })
       } else {
+        this.props.setClickedPersonId(user.id)
         this.setState({
-          clickedPersonId: user.id,
           clickedPersonName: user.name
         })
       }
     } else {
+      this.props.setClickedPersonId(user.id)
       this.setState({
-        clickedPersonId: user.id,
         clickedPersonName: user.name,
-        // modal: true
       })
     }
   }
 
   handleAddBuddy = () => {
-    this.props.addToFriendList(this.state.clickedPersonId, this.state.clickedPersonName);
-    this.toggleModal();
+    this.props.addToFriendList(this.props.clickedPersonId, this.state.clickedPersonName);
+    this.toggleModal(); //to close
   }
 
   handleRemoveBuddy = () => {
-    let friend = this.props.friendList.filter(friend => parseInt(friend.friend_id) === this.state.clickedPersonId); //returns array of length 1, friend is friend object **CAREFUL**
-    this.props.removeFromFriendList(friend[0].id, this.state.clickedPersonId); //(friend ID friend object, USER ID to be removed user object.) - sorry.
-    this.toggleModal();
+    let friend = this.props.friendList.filter(friend => parseInt(friend.friend_id) === this.props.clickedPersonId); //returns array of length 1, friend is friend object **CAREFUL**
+    this.props.removeFromFriendList(friend[0].id, this.props.clickedPersonId); //(friend ID friend object, USER ID to be removed user object.) - sorry.
+    this.toggleModal(); // to close
+  }
+
+  addRemoveBuddyClick = () => {
+    if (this.props.clickedPersonId !== 0 && this.state.onlineText === "People" && this.props.onlineFriendList.filter(user => user.id === this.props.clickedPersonId).length === 0) { // as long as you've clicked someone && theyre not already a buddy
+      this.toggleModal();
+    } else if (this.props.clickedPersonId !== 0 && this.state.onlineText === "Buddies") {
+      this.toggleModal();
+    }
   }
 
   setNameChange = (e) => {
@@ -122,6 +133,7 @@ export default class FriendList extends Component {
   }
 
   render() {
+    console.log(this.props.clickedPersonId);
     return (
       <div className="friendlist-component">
         {this.state.modal &&
@@ -191,7 +203,7 @@ export default class FriendList extends Component {
           <div className="friendlist-icons-wrapper">
             <button onClick={(e) => this.setNameChange(e)} className="chat-send">Username Change</button>
             <button className="friendlist-button chat-send friendlist-buttons">Direct Message</button>
-            <button className="chat-send friendlist-buttons" onClick={this.state.clickedPersonId && this.toggleModal}>{this.state.onlineText === "Buddies" ? this.state.removeBuddyText : this.state.addBuddyText}</button>
+            <button className="chat-send friendlist-buttons" onClick={this.addRemoveBuddyClick}>{this.state.onlineText === "Buddies" ? this.state.removeBuddyText : this.state.addBuddyText}</button>
           </div>
         </div>
 
