@@ -15,12 +15,21 @@ class Chat extends Component {
 
     this.state = {
       chatLogs: [],
+      messageIndex: {
+        0: 0
+      },
+      chatLogs2: [
+        [
+        ]
+      ],
       currentChatMessage: '',
       lastAppearEvent: '',
       haveIAppeared: false,
       modal: false,
       iconList: ["images/buddyicons/happydance.gif", "images/buddyicons/breakdance.gif", "images/buddyicons/goofaround.gif", "images/buddyicons/lightsaber.gif", "images/buddyicons/mrt.gif", "images/buddyicons/muffinmass.gif", "images/buddyicons/obama.gif", "images/buddyicons/skate.gif", "images/buddyicons/spaz.gif", "images/buddyicons/spoiled.gif", "images/buddyicons/superpower.gif"],
-      randomIcon: ''
+      randomIcon: '',
+      chatWindow: '1',
+      chatWindows: ['1']
     }
   }
 
@@ -58,11 +67,11 @@ class Chat extends Component {
 
   setRecentMessages = async () => {
     const data = await getTenMessages();
-    data.map(user =>
-      this.setState({
-        chatLogs: [...this.state.chatLogs, user]
-      })
-    );
+    let tempLogs = this.state.chatLogs2;
+    tempLogs[0] = data
+    this.setState({
+      chatLogs2: tempLogs
+    })
   }
 
   toggleModal = () => {
@@ -100,9 +109,14 @@ class Chat extends Component {
       },
       received: async (data) => {
         if (data.event) {
-          if (data.event === 'appear') {
+          if (data.event === 'appear') { //someone logged in
+            if (!data.destination) {
+              data.destination = 0
+            }
+            let tempLog = this.state.chatLogs2;
+            tempLog[parseInt(data.destination)] = [...tempLog[parseInt(data.destination)], data]
             this.setState({
-              chatLogs: [...this.state.chatLogs, data] // THIS IS FINE
+              chatLogs2: tempLog
             });
             let userObj = this.props.userList.filter(user => user.id === data.id) //We want the userObj NOT the announcement event Obj!
             if (!userObj[0]) { // only true when it's a new user that was not added to the original userList at componentDidMount in app.js
@@ -113,29 +127,123 @@ class Chat extends Component {
             }
 
           }
-          else if (data.event === 'disappear') {
+          else if (data.event === 'disappear') { // someone logged out
+            if (!data.destination) {
+              data.destination = 0
+            }
+            let tempLog = this.state.chatLogs2;
+            tempLog[parseInt(data.destination)] = [...tempLog[parseInt(data.destination)], data]
             this.setState({
-              chatLogs: [...this.state.chatLogs, data] // THIS IS FINE
+              chatLogs2: tempLog
             });
             this.props.removeFromUserList(data); //BAD but works fine for our purposes. (two different object comparison but id = id)
           }
-        } else {
-          this.setState({
-            chatLogs: [...this.state.chatLogs, data]
-          });
-          if (data.name !== this.props.currentUser.name) {
+        } else { // someone said a message
+          // this.setState({ //OLD
+          //   chatLogs: [...this.state.chatLogs, data]
+          // });
+          if (parseInt(data.destination) === 0) { // if intended for group append it to group log
+            let tempLog = this.state.chatLogs2;
+            tempLog[0] = [...tempLog[0], data]
+            this.setState({
+              chatLogs2: tempLog
+            });
+
+            //IF MESSAGE IS FOR YOU, DM. CHECK IF DM WITH THAT PERSON ALREADY EXISTS IF IT DOES APPEND TO THAT CHAT ARRAY, OTHERWISE CREATE A NEW ONE WITH THAT PERSONS NAME AND ID AS INDEX0 OF THAT ARRAY AND THEN APPEND FROM THERE.
+          } else if (data.destination === this.props.currentUser.id) { //if for you specifically and not group
+            //set message index from data.user_id
+            if (this.state.messageIndex[data.user_id]) { // should really turn this into a helper function
+              let index = this.state.messageIndex[data.user_id];
+              let tempLog = this.state.chatLogs2;
+              tempLog[index] = [...tempLog[index], data]
+              this.setState({
+                chatLogs2: tempLog
+              })
+            } else { //its the first message from this person or to this person
+              let tempMessageIndex = this.state.messageIndex;
+              tempMessageIndex[data.user_id] = this.state.chatLogs2.length;
+
+              let index = this.state.messageIndex[data.user_id];
+              let tempLog = this.state.chatLogs2;
+              tempLog[index] = [data];
+              this.setState({
+                chatLogs2: tempLog
+              })
+            }
+          } else if (data.user_id === this.props.currentUser.id) { //if from you specifically for someone else not the group
+            //set message index from data.destination
+            if (this.state.messageIndex[data.destination]) {
+              let index = this.state.messageIndex[data.destination];
+              let tempLog = this.state.chatLogs2;
+              tempLog[index] = [...tempLog[index], data]
+              this.setState({
+                chatLogs2: tempLog
+              })
+            } else {
+              let tempMessageIndex = this.state.messageIndex;
+              tempMessageIndex[data.destination] = this.state.chatLogs2.length;
+
+              let index = this.state.messageIndex[data.destination];
+              let tempLog = this.state.chatLogs2;
+              tempLog[index] = [data];
+              this.setState({
+                chatLogs2: tempLog
+              })
+            }
+          }
+
+
+
+          if (data.name !== this.props.currentUser.name) { //play audio cue
             this.props.playSound(this.imrcv);
           }
 
         }
       },
-      create: function (chatContent, id) {
+      create: function (chatContent, id, destination) {
         this.perform('create', {
           content: chatContent,
-          created_by: id
+          created_by: id,
+          destination: destination
         });
       }
     });
+  }
+
+  renderChatLog2 = () => {
+    if (this.state.chatLogs2) {
+      return this.state.chatLogs2[this.state.messageIndex[this.props.destination]].map((el, key) => {
+        let serverTime = new Date(Date.parse(el.created_at))
+        let time = serverTime.getHours() + ":" + serverTime.getMinutes()
+        return (
+          <div key={key}>
+            {el.event ?
+              el.event === 'appear' ?
+                <li>
+                  <i>{el.name} has entered the chat.</i>
+                </li>
+                :
+                (el.event === 'disappear' &&
+                  <li>
+                    <i>{el.name} has left the chat.</i>
+                  </li>
+                )
+              :
+              <li key={`chat_${el.id}`}>
+                {el.name === this.props.currentUser.name ?
+                  <span className='chat-your-name'>{el.name}</span>
+                  :
+                  <span className='chat-their-name'>{el.name}</span>
+                }
+                <span className='chat-created-at'>({time}): </span>
+                <span className='chat-message'>{el.content}</span>
+              </li>
+            }
+          </div>
+        )
+      }
+      );
+    }
   }
 
   renderChatLog = () => {
@@ -182,7 +290,7 @@ class Chat extends Component {
   handleSendEvent(event) {
     event.preventDefault();
     if (this.state.currentChatMessage) {
-      this.chats.create(this.state.currentChatMessage, this.props.currentUser.id);
+      this.chats.create(this.state.currentChatMessage, this.props.currentUser.id, this.props.destination);
       this.setState({
         currentChatMessage: ''
       });
@@ -206,6 +314,7 @@ class Chat extends Component {
   }
 
   render() {
+    // console.log(this.state.chatLogs2);
     return (
       <div className="chat">
         {this.state.modal &&
@@ -226,7 +335,8 @@ class Chat extends Component {
         <div className='chat-wrapper'>
           <div className='chat-window' ref={this.chatField}>
             <ul className='chat-log'>
-              {this.renderChatLog()}
+              {/* {this.renderChatLog()} */}
+              {this.renderChatLog2(this.props.clickedPersonId)}
             </ul>
           </div>
           <textarea
