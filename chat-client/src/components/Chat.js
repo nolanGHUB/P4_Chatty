@@ -10,31 +10,25 @@ class Chat extends Component {
   constructor(props) {
     super(props)
 
-    this.chatField = React.createRef();
-
+    this.chatField = React.createRef(); //create reference to the chatfield in order to keep it scrolled down
 
     this.state = {
-      chatLogs: [],
-      messageIndex: {
-        0: 0
+      messageIndex: { // basically keeps track of all of the current DirectMessages and to whom they are from
+        0: 0 //key = which user_id the messages are from ( 0 is group chat ) and the value is the index within chatLogs2 that these messages are stored.
       },
-      chatLogs2: [
-        [
-        ]
+      chatLogs2: [ //where all messages are stored and sorted
+        []
       ],
-      currentChatMessage: '',
-      lastAppearEvent: '',
-      haveIAppeared: false,
-      modal: false,
+      currentChatMessage: '', //holds currently typed input to-be sent to the channel
+      haveIAppeared: false, //keep track of current user's announcement message to prevent it from being repeated. (bugfix)
+      modal: false, //opens & closes the error message box
       iconList: ["images/buddyicons/happydance.gif", "images/buddyicons/breakdance.gif", "images/buddyicons/goofaround.gif", "images/buddyicons/lightsaber.gif", "images/buddyicons/mrt.gif", "images/buddyicons/muffinmass.gif", "images/buddyicons/obama.gif", "images/buddyicons/skate.gif", "images/buddyicons/spaz.gif", "images/buddyicons/spoiled.gif", "images/buddyicons/superpower.gif"],
-      randomIcon: '',
-      chatWindow: '1',
-      chatWindows: ['1']
+      randomIcon: '', //where the currently chosen animated gif is stored (math.random)
     }
   }
 
   componentDidMount() {
-    this.createSocket();
+    this.createSocket(); //open connection to web-socket channel
     this.setRecentMessages();
     this.setIcon();
 
@@ -84,12 +78,12 @@ class Chat extends Component {
     //empty function because modal requires it and I don't feel like refactoring it, it gets used properly in Header however here it IS the error text and doesn't need to set anything!
   }
 
-  createSocket = async () => {
+  createSocket = async () => { //create connection to WS
     this.cable = Cable.createConsumer('ws://localhost:3001/cable');
     this.chats = this.cable.subscriptions.create({
       channel: 'ChatChannel'
     }, {
-      connected: () => {
+      connected: () => { // fire this when connect
         if (this.state.haveIAppeared === false) {
           this.chats.perform('appear', {
             id: this.props.currentUser.id
@@ -99,22 +93,19 @@ class Chat extends Component {
           })
         }
       },
-      disconnected: () => {
-        // this.chats.perform('disappear', {
-        //   userId: this.props.currentUser.id
-        // })
+      disconnected: () => { //fired when disconnected
         this.setState({
           haveIAppeared: false
         })
       },
-      received: async (data) => {
+      received: async (data) => { //fired upon receiving any json from socket
         if (data.event) {
-          if (data.event === 'appear') { //someone logged in
+          if (data.event === 'appear') { //someone logged in -broadcast
             if (!data.destination) {
-              data.destination = 0
+              data.destination = 0 // send events to chatroom-allchat only.
             }
             let tempLog = this.state.chatLogs2;
-            tempLog[parseInt(data.destination)] = [...tempLog[parseInt(data.destination)], data]
+            tempLog[parseInt(data.destination)] = [...tempLog[parseInt(data.destination)], data] //inserting message into chatlog[0] which is where groupchat objects are stored
             this.setState({
               chatLogs2: tempLog
             });
@@ -129,7 +120,7 @@ class Chat extends Component {
           }
           else if (data.event === 'disappear') { // someone logged out
             if (!data.destination) {
-              data.destination = 0
+              data.destination = 0 // send events to chatroom-allchat only.
             }
             let tempLog = this.state.chatLogs2;
             tempLog[parseInt(data.destination)] = [...tempLog[parseInt(data.destination)], data]
@@ -138,10 +129,7 @@ class Chat extends Component {
             });
             this.props.removeFromUserList(data); //BAD but works fine for our purposes. (two different object comparison but id = id)
           }
-        } else { // someone said a message
-          // this.setState({ //OLD
-          //   chatLogs: [...this.state.chatLogs, data]
-          // });
+        } else { //Someone said something in a chat and this catches the receiving end of it
           if (parseInt(data.destination) === 0) { // if intended for group append it to group log
             let tempLog = this.state.chatLogs2;
             tempLog[0] = [...tempLog[0], data]
@@ -150,18 +138,27 @@ class Chat extends Component {
             });
 
             //IF MESSAGE IS FOR YOU, DM. CHECK IF DM WITH THAT PERSON ALREADY EXISTS IF IT DOES APPEND TO THAT CHAT ARRAY, OTHERWISE CREATE A NEW ONE WITH THAT PERSONS NAME AND ID AS INDEX0 OF THAT ARRAY AND THEN APPEND FROM THERE.
-          } else if (data.destination === this.props.currentUser.id) { //if for you specifically and not group
-            //set message index from data.user_id
-            if (this.state.messageIndex[data.user_id]) { // should really turn this into a helper function
+          } else if (parseInt(data.destination) === this.props.currentUser.id) { //if for you specifically and not group
+            if (this.state.messageIndex[data.user_id]) { //IF RECEIVED MESSAGE FROM THIS PERSON BEFORE, APPEND index
               let index = this.state.messageIndex[data.user_id];
               let tempLog = this.state.chatLogs2;
+
+              if (parseInt(this.props.destination) !== parseInt(data.user_id)) {
+                this.props.addToUnreadMessages(parseInt(data.user_id));
+              }
+
               tempLog[index] = [...tempLog[index], data]
               this.setState({
                 chatLogs2: tempLog
               })
-            } else { //its the first message from this person or to this person
+            } else { //PM WINDOW HAS YET TO BE ESTABLISHED - THIS STARTING WITH THEM
+              this.props.addChatWindow({ index: data.user_id, name: data.name })
               let tempMessageIndex = this.state.messageIndex;
               tempMessageIndex[data.user_id] = this.state.chatLogs2.length;
+
+              if (parseInt(this.props.destination) !== parseInt(data.user_id)) {
+                this.props.addToUnreadMessages(parseInt(data.user_id));
+              }
 
               let index = this.state.messageIndex[data.user_id];
               let tempLog = this.state.chatLogs2;
@@ -171,19 +168,30 @@ class Chat extends Component {
               })
             }
           } else if (data.user_id === this.props.currentUser.id) { //if from you specifically for someone else not the group
-            //set message index from data.destination
-            if (this.state.messageIndex[data.destination]) {
-              let index = this.state.messageIndex[data.destination];
+            if (this.state.messageIndex[parseInt(data.destination)]) { //IF PM HAS BEEN ESTABLISHED WITH THIS PERSON BEFORE
+              let index = this.state.messageIndex[parseInt(data.destination)];
               let tempLog = this.state.chatLogs2;
+
+              if (parseInt(this.props.destination) !== parseInt(data.destination)) {
+                this.props.addToUnreadMessages(parseInt(data.destination));
+              }
+
               tempLog[index] = [...tempLog[index], data]
               this.setState({
                 chatLogs2: tempLog
               })
-            } else {
+            } else { //PM HAS YET TO BE ESTABLISHED WITH THIS PERSON - THIS STARTING FROM YOU
+              let destinationUserArray = this.props.onlineUserList.filter(onlineUser => parseInt(onlineUser.id) === parseInt(data.destination))
+              this.props.addChatWindow({ index: parseInt(data.destination), name: destinationUserArray[0].name })
               let tempMessageIndex = this.state.messageIndex;
-              tempMessageIndex[data.destination] = this.state.chatLogs2.length;
 
-              let index = this.state.messageIndex[data.destination];
+              if (parseInt(this.props.destination) !== parseInt(data.destination)) {
+                this.props.addToUnreadMessages(parseInt(data.destination));
+              }
+
+              tempMessageIndex[parseInt(data.destination)] = this.state.chatLogs2.length;
+
+              let index = this.state.messageIndex[parseInt(data.destination)];
               let tempLog = this.state.chatLogs2;
               tempLog[index] = [data];
               this.setState({
@@ -192,13 +200,12 @@ class Chat extends Component {
             }
           }
 
-
-
-          if (data.name !== this.props.currentUser.name) { //play audio cue
+          if (data.name !== this.props.currentUser.name && (parseInt(data.destination) === 0 || parseInt(data.destination) === this.props.currentUser.id)) { //play audio cue upon receiving any message for you
             this.props.playSound(this.imrcv);
           }
-
         }
+        console.log(this.state.chatLogs2)
+        console.log(this.state.messageIndex);
       },
       create: function (chatContent, id, destination) {
         this.perform('create', {
@@ -211,7 +218,7 @@ class Chat extends Component {
   }
 
   renderChatLog2 = () => {
-    if (this.state.chatLogs2) {
+    if (this.state.chatLogs2[this.state.messageIndex[this.props.destination]]) {
       return this.state.chatLogs2[this.state.messageIndex[this.props.destination]].map((el, key) => {
         let serverTime = new Date(Date.parse(el.created_at))
         let time = serverTime.getHours() + ":" + serverTime.getMinutes()
@@ -244,41 +251,6 @@ class Chat extends Component {
       }
       );
     }
-  }
-
-  renderChatLog = () => {
-    return this.state.chatLogs.map((el, key) => {
-      let serverTime = new Date(Date.parse(el.created_at))
-      let time = serverTime.getHours() + ":" + serverTime.getMinutes()
-      return (
-        <div key={key}>
-          {el.event ?
-            el.event === 'appear' ?
-              <li>
-                <i>{el.name} has entered the chat.</i>
-              </li>
-              :
-              (el.event === 'disappear' &&
-                <li>
-                  <i>{el.name} has left the chat.</i>
-                </li>
-              )
-            :
-            <li key={`chat_${el.id}`}>
-              {el.name === this.props.currentUser.name ?
-                <span className='chat-your-name'>{el.name}</span>
-                :
-                <span className='chat-their-name'>{el.name}</span>
-              }
-              <span className='chat-created-at'>({time}): </span>
-              <span className='chat-message'>{el.content}</span>
-            </li>
-          }
-        </div>
-      )
-    }
-    );
-
   }
 
   updateCurrentChatMessage(event) {
@@ -314,7 +286,6 @@ class Chat extends Component {
   }
 
   render() {
-    // console.log(this.state.chatLogs2);
     return (
       <div className="chat">
         {this.state.modal &&
@@ -336,7 +307,7 @@ class Chat extends Component {
           <div className='chat-window' ref={this.chatField}>
             <ul className='chat-log'>
               {/* {this.renderChatLog()} */}
-              {this.renderChatLog2(this.props.clickedPersonId)}
+              {this.renderChatLog2()}
             </ul>
           </div>
           <textarea
