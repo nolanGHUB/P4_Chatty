@@ -7,6 +7,7 @@ import Chat from './components/Chat';
 import Header from './components/Header';
 import Window from './components/Window';
 import FriendList from './components/FriendList'
+import MinimizedWindows from './components/MinimizedWindows'
 
 class App extends Component {
   constructor(props) {
@@ -17,12 +18,14 @@ class App extends Component {
       userList: [], //user objects
       onlineUserList: [], //user objects
       friendList: [], //friend objects {id: i, user_adding_friend_id: "num", friend_id: "num", friend_name: "s"} 
-      hasActivelyLoggedOut: false,
-      onlineFriendList: [],
-      chatWindow: '1',
-      chatWindows: ['1'],
-      destination: 0,
-      clickedPersonId: 0
+      hasActivelyLoggedOut: false, // sends logout function to trigger inside Chat.js (where the socket is)
+      onlineFriendList: [], // list of friends of whom are online
+      // currentChatWindow: 0,
+      chatWindows: [{ index: 0, name: "group" }],
+      destination: 0, // to whom youd like to send a PM to - to communicate between chat and friendlist
+      clickedPersonId: 0, // id of user that has been highlighted on buddylist
+      unreadMessages: [],
+      chatBarText: "Group Chat"
     }
   }
 
@@ -85,6 +88,41 @@ class App extends Component {
 
     this.setState({
       userList: [...this.state.userList, user]
+    })
+  }
+
+  setChatBar = (newText) => {
+
+    this.setState({
+      chatBarText: newText
+    })
+  }
+
+  // setCurrentChatWindow = (windowIndex) => {
+
+  //   this.setState({
+  //     currentChatWindow: windowIndex
+  //   })
+  // }
+
+  addChatWindow = (windowObj) => {
+
+    this.setState({
+      chatWindows: [...this.state.chatWindows, windowObj]
+    })
+  }
+
+  addToUnreadMessages = (id) => {
+    this.setState({
+      unreadMessages: [...this.state.unreadMessages, id]
+    })
+  }
+
+  removeFromUnreadMessages = (id) => {
+    let tempMessages = this.state.unreadMessages.filter(message => message !== id)
+
+    this.setState({
+      unreadMessages: tempMessages
     })
   }
 
@@ -215,27 +253,40 @@ class App extends Component {
         {this.state.currentUser &&
           <div className="main-window">
             <div></div>
-            <Window
-              topBarText="Group Chat"
-              onClose={this.handleLogout}
-            >
-              <Chat
-                currentUser={this.state.currentUser}
-                handleLogout={this.handleLogout}
-                addToOnlineUserLists={this.addToOnlineUserLists}
-                removeFromUserList={this.removeFromUserList}
-                hasActivelyLoggedOut={this.state.hasActivelyLoggedOut}
-                setHasActivelyLoggedOut={this.setHasActivelyLoggedOut}
-                setUser={this.setUser}
-                onlineUserList={this.onlineUserList}
-                userList={this.state.userList}
-                addToUserList={this.addToUserList}
-                playSound={this.playSound}
+            <div className="main-chat">
+              <Window
+                topBarText={this.state.chatBarText}
+                onClose={this.handleLogout}
+              >
+                <Chat
+                  currentUser={this.state.currentUser}
+                  handleLogout={this.handleLogout}
+                  addToOnlineUserLists={this.addToOnlineUserLists}
+                  removeFromUserList={this.removeFromUserList}
+                  hasActivelyLoggedOut={this.state.hasActivelyLoggedOut}
+                  setHasActivelyLoggedOut={this.setHasActivelyLoggedOut}
+                  setUser={this.setUser}
+                  onlineUserList={this.state.onlineUserList}
+                  userList={this.state.userList}
+                  addToUserList={this.addToUserList}
+                  playSound={this.playSound}
+                  destination={this.state.destination}
+                  setDestination={this.setDestination}
+                  clickedPersonId={this.state.clickedPersonId}
+                  addChatWindow={this.addChatWindow}
+                  addToUnreadMessages={this.addToUnreadMessages}
+                />
+              </Window>
+              <MinimizedWindows
+                chatWindows={this.state.chatWindows}
                 destination={this.state.destination}
+                setClickedPersonId={this.setClickedPersonId}
                 setDestination={this.setDestination}
-                clickedPersonId={this.state.clickedPersonId}
+                removeFromUnreadMessages={this.removeFromUnreadMessages}
+                unreadMessages={this.state.unreadMessages}
+                setChatBar={this.setChatBar}
               />
-            </Window>
+            </div>
             <Window
               topBarText={`${this.state.currentUser.name}'s Buddy List`}
               onClose={this.handleLogout}
@@ -254,6 +305,7 @@ class App extends Component {
                 setClickedPersonId={this.setClickedPersonId}
                 destination={this.state.destination}
                 setDestination={this.setDestination}
+                setChatBar={this.setChatBar}
               />
             </Window>
           </div>
