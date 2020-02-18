@@ -18,7 +18,11 @@ class App extends Component {
       onlineUserList: [], //user objects
       friendList: [], //friend objects {id: i, user_adding_friend_id: "num", friend_id: "num", friend_name: "s"} 
       hasActivelyLoggedOut: false,
-      onlineFriendList: []
+      onlineFriendList: [],
+      chatWindow: '1',
+      chatWindows: ['1'],
+      destination: 0,
+      clickedPersonId: 0
     }
   }
 
@@ -63,6 +67,18 @@ class App extends Component {
         onlineFriendList
       })
     }
+  }
+
+  setClickedPersonId = (id) => {
+    this.setState({
+      clickedPersonId: id
+    })
+  }
+
+  setDestination = (destination) => {
+    this.setState({
+      destination
+    })
   }
 
   addToUserList = (user) => {
@@ -215,6 +231,9 @@ class App extends Component {
                 userList={this.state.userList}
                 addToUserList={this.addToUserList}
                 playSound={this.playSound}
+                destination={this.state.destination}
+                setDestination={this.setDestination}
+                clickedPersonId={this.state.clickedPersonId}
               />
             </Window>
             <Window
@@ -231,6 +250,10 @@ class App extends Component {
                 addToFriendList={this.addToFriendList}
                 removeFromFriendList={this.removeFromFriendList}
                 updateStateListsForNewName={this.updateStateListsForNewName}
+                clickedPersonId={this.state.clickedPersonId}
+                setClickedPersonId={this.setClickedPersonId}
+                destination={this.state.destination}
+                setDestination={this.setDestination}
               />
             </Window>
           </div>
