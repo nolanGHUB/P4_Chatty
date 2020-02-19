@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4ceb39e6-ec70-4de4-98cd-4fc6acc8157d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/chat_messages_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/chat_messages_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/development.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db/development.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/development.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/development.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/e5/c0bcd615468ad3" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-compile-cache/e5/c0bcd615468ad3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmp/cache/bootsnap-load-path-cache" beforeDir="false" afterPath="$PROJECT_DIR$/tmp/cache/bootsnap-load-path-cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat-client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../chat-client/src/components/Chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/Chat.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../chat-client/src/components/FriendList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat-client/src/components/FriendList.js" afterDir="false" />
     </list>
@@ -180,7 +179,7 @@
       <updated>1581083590335</updated>
       <workItem from="1581083594618" duration="982000" />
       <workItem from="1581094254704" duration="742000" />
-      <workItem from="1581717561799" duration="13802000" />
+      <workItem from="1581717561799" duration="14252000" />
     </task>
     <servers />
   </component>
