@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Window from './components/Window';
 import FriendList from './components/FriendList'
 import MinimizedWindows from './components/MinimizedWindows'
+import Footer from './components/Footer'
 
 class App extends Component {
   constructor(props) {
@@ -20,8 +21,7 @@ class App extends Component {
       friendList: [], //friend objects {id: i, user_adding_friend_id: "num", friend_id: "num", friend_name: "s"} 
       hasActivelyLoggedOut: false, // sends logout function to trigger inside Chat.js (where the socket is)
       onlineFriendList: [], // list of friends of whom are online
-      // currentChatWindow: 0,
-      chatWindows: [{ index: 0, name: "group" }],
+      chatWindows: [{ index: 0, name: "Group Chat" }],
       destination: 0, // to whom youd like to send a PM to - to communicate between chat and friendlist
       clickedPersonId: 0, // id of user that has been highlighted on buddylist
       unreadMessages: [],
@@ -52,7 +52,6 @@ class App extends Component {
 
   setUserList = async () => {
     const userList = await getAllUsers();
-    // console.log(userList);
     const onlineUserList = userList.filter(user => user.is_online === true);
     this.setState({
       userList,
@@ -98,13 +97,6 @@ class App extends Component {
     })
   }
 
-  // setCurrentChatWindow = (windowIndex) => {
-
-  //   this.setState({
-  //     currentChatWindow: windowIndex
-  //   })
-  // }
-
   addChatWindow = (windowObj) => {
 
     this.setState({
@@ -127,15 +119,11 @@ class App extends Component {
   }
 
   addToOnlineUserLists = (user) => {
+
     //ONLINE FRIEND AND !ONLINEFRIEND - ADD TO FRIEND
     //ONLINE !FRIEND - DO NOTHING
     //!ONLINE FRIEND - ADD TO BOTH
     //!ONLINE !FRIEND - ADD TO ONLINEUSER
-
-    //ONLINE FRIEND AND ONLINEFRIEND || ONLINE & !FRIEND are the two situations that are fired during a name-update-announcement. Neither of which do anything, so lets do it up top specifically for this.
-    //if ( online && onlineUserList.some(userx => { userx.id === user.id && userx.name !== user.name})) -- this seems too exhaustive.
-
-
     let onlinefriend = false;
     if (user.id !== this.state.currentUser.id) {
       const online = this.state.onlineUserList.some(userx => (userx.id === user.id)); // true/false if already online
@@ -224,8 +212,6 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    // console.log("FROM LOGOUT");
-    // this.setUser(null); // now handled in Chat component because if you do it here it immediately "closes" the chat component before the socket disconnect can occur.
     this.setState({
       hasActivelyLoggedOut: true //effectively a sent message from App.js child component: Chat, saying hey, user has logged out!, most of which is handled inside Chat already.
     })
@@ -236,12 +222,8 @@ class App extends Component {
   }
 
   render() {
-    // console.log(this.state.currentUser) {auth_token: "", name: "", email: "", id: #}
-    // console.log(this.state.userList) {id: #, name: "", email: "", is_online: t/f}
-    // console.log(this.state.onlineUserList)
     return (
       <div className='App'>
-
         <Header
           currentUser={this.state.currentUser}
           setUser={this.setUser}
@@ -310,6 +292,7 @@ class App extends Component {
             </Window>
           </div>
         }
+        <Footer />
       </div>
     );
   }
