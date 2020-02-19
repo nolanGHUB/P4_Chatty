@@ -204,8 +204,6 @@ class Chat extends Component {
             this.props.playSound(this.imrcv);
           }
         }
-        console.log(this.state.chatLogs2)
-        console.log(this.state.messageIndex);
       },
       create: function (chatContent, id, destination) {
         this.perform('create', {
@@ -268,7 +266,6 @@ class Chat extends Component {
       });
       this.props.playSound(this.imsend)
     } else {
-      console.log("You have to type a message first!");
       this.setState({
         modal: true
       })

@@ -133,7 +133,6 @@ export default class FriendList extends Component {
   }
 
   render() {
-    // console.log(this.props.clickedPersonId);
     return (
       <div className="friendlist-component">
         {this.state.modal &&
